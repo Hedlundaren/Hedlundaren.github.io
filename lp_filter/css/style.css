@@ -12,6 +12,7 @@ div {
 body{
 	background:#245666; 
 	color: white;
+	font-size: 20px;
 	margin: 0px;
 	padding:0px;
 }
@@ -46,7 +47,7 @@ div#mp3_player > div > audio{
 
 div#EQcontrols{ 
 	width:700px; 
-	height:200px; 
+	height:250px; 
 	background: #003447; 
 	padding: 0px; 
 	margin: 0px auto;
@@ -83,4 +84,9 @@ button:active{
 #audio_box{
 	margin:0px;
 	padding:0px;
+}
+
+#controls{
+	margin:0px;
+	padding:10px;
 }
