@@ -25,7 +25,20 @@ h1{
 	width: 80%;
 	padding: 10px;
 	margin: 0px auto;
+}
 
+#musik_info{
+	font-family: Georgia;
+	font-size: 12px;
+	margin: 1px;
+	padding: 0px;
+	opacity: 0.5;
+}
+#musik_info_div{
+	margin-left: auto;	
+	margin-right: auto;
+	width: 10%;
+	min-width: 250px;
 }
 
 div#mp3_player{ 

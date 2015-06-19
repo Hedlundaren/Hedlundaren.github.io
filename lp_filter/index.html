@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Sound shit</title>
+	<title>LP-filter</title>
 
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/animate.css">
@@ -30,8 +30,14 @@
 	<label for="c1"><span></span>Filtrera</label></p>-->
 	<div id="controls">
 		<p><input type="range" min="0" max="1" step="0.01" value="1" onchange="sample.changeFrequency(this);"> FREKVENS</p>
-		<p><input type="range" min="0" max="1" step="0.01" value="0" onchange="sample.changeQuality(this);"> KVALITETSFAKTOR</p>
+		<p><input type="range" min="0" max="1" step="0.01" value="0" onchange="sample.changeQuality(this);"> Q-FAKTOR</p>
 	</div>
+	
+</div>
+
+<div id="musik_info_div">
+	<p id="musik_info">Musik: Cornelis Vreeswijk - Visa i vinden</p>
+	<p id="musik_info">Webdesign: Simon Hedlund</p>
 </div>
 
 	<script src="static/js/shared.js"></script>

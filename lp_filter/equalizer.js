@@ -1,3 +1,6 @@
+alert("Ibland tar det tid för ljudfilen att ladda...\nVänligen ha tålamod!");
+
+
 var audio = new Audio();
 	audio.src='visa.mp3';
 	audio.controls = true;

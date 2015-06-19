@@ -1,0 +1,24 @@
+
+
+//INITIERING
+loadSounds(this, {buffer: 'visa.mp3'}); // ladda in ljud i buffer
+
+var source = context.createBufferSource(); // skapa ljudkällan
+source.buffer = this.buffer; //koppla buffern till ljudkällan
+
+var filter = context.createBiquadFilter(); //skapa filtret
+filter.type = filter.LOWPASS;	//bestäm typ av filter
+filter.frequency.value = 5000;	//filtrets startvärde i Hz (max)
+
+source.connect(filter); // koppla filtret till ljudkällan
+
+
+
+
+//FÖRÄNDRING
+var minValue = 40;	//minsta frekvens
+var maxValue = context.sampleRate / 2;	//högsta frekv. enl. Nyquists
+//antal oktaver
+var numberOfOctaves = Math.log(maxValue / minValue) / Math.LN2;	
+var multiplier = Math.pow(2, numberOfOctaves * (element.value - 1.0)); //faktor
+this.filter.frequency.value = maxValue * multiplier; //ger filtret ny brytningsfrekvens

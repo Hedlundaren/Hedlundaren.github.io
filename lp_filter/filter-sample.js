@@ -6,8 +6,8 @@ audio.loop = true;
 audio.autoplay = false;
 
 
-context = new AudioContext(); // AudioContext object instance
-analyser = context.createAnalyser(); // AnalyserNode method
+context = new AudioContext(); // AudioContext instans
+analyser = context.createAnalyser(); // Analyser
 canvas = document.getElementById('analyser_render');
 ctx = canvas.getContext('2d');
 
@@ -15,20 +15,18 @@ function frameLooper(){
   window.requestAnimationFrame(frameLooper);
   fbc_array = new Uint8Array(analyser.frequencyBinCount);
   analyser.getByteFrequencyData(fbc_array);
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-  ctx.fillStyle = '#fc5050'; // Color of the bars
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // rensa canvas
+  ctx.fillStyle = '#fc5050'; // färg på barerna
   bars = 150;
   for (var i = 0; i < bars; i++) {
     bar_x = i * 2;
     bar_width = 0.6;
     bar_height = -(fbc_array[i] / 2);
-    //  fillRect( x, y, width, height ) // Explanation of the parameters below
     ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
   }
 }
 
-
-var QUAL_MUL = 25;
+var QUAL_MUL = 30;
 
 function FilterSample() {
   this.isPlaying = false;
@@ -38,28 +36,23 @@ function FilterSample() {
 FilterSample.prototype.play = function() {
   document.getElementById("play-pause-icon").className = "fa fa-stop fa-fw fa-2x";
 
-  // Create the source.
-  var source = context.createBufferSource();
-  source.buffer = this.buffer;
-  // Create the filter.
-  var filter = context.createBiquadFilter();
-  filter.type = filter.LOWPASS;
-  filter.frequency.value = 5000;
-  // Connect source to filter, filter to destination.
-  source.connect(filter);
+  var source = context.createBufferSource(); // skapa ljudkällan
+  source.buffer = this.buffer; //koppla buffern till ljudkällan
+
+  var filter = context.createBiquadFilter(); //skapa filtret
+  filter.type = filter.LOWPASS;	//bestäm typ av filter
+  filter.frequency.value = 5000;	//filtrets startvärde i Hz (max)
+  source.connect(filter); // koppla filtret till ljudkällan
   filter.connect(context.destination);
-  // Play!
 
-
-  // Re-route audio playback into the processing graph of the AudioContext
   filter.connect(analyser);
   analyser.connect(context.destination);
   frameLooper();
 
-  source[source.start ? 'start' : 'noteOn'](0);
+  source[source.start ? 'start':'noteOn'](0);
   source.loop = true;
-  // Save source and filterNode for later access.
-  this.source = source;
+
+  this.source = source;	//spara källan och filternod
   this.filter = filter;
 };
 
@@ -74,16 +67,14 @@ FilterSample.prototype.toggle = function() {
 };
 
 FilterSample.prototype.changeFrequency = function(element) {
-  // Clamp the frequency between the minimum value (40 Hz) and half of the
-  // sampling rate.
-  var minValue = 40;
-  var maxValue = context.sampleRate / 2;
-  // Logarithm (base 2) to compute how many octaves fall in the range.
-  var numberOfOctaves = Math.log(maxValue / minValue) / Math.LN2;
-  // Compute a multiplier from 0 to 1 based on an exponential scale.
-  var multiplier = Math.pow(2, numberOfOctaves * (element.value - 1.0));
-  // Get back to the frequency value between min and max.
-  this.filter.frequency.value = maxValue * multiplier;
+	console.log(element);
+
+	var minValue = 20;	//minsta frekvens
+	var maxValue = context.sampleRate / 2;	//högsta frekv. enl. Nyquists
+	//antal oktaver
+	var numberOfOctaves = Math.log(maxValue / minValue) / Math.LN2;	
+	var multiplier = Math.pow(2, numberOfOctaves * (element.value - 1.0)); //faktor
+	this.filter.frequency.value = maxValue * multiplier; //ger filtret ny brytningsfrekvens
 };
 
 FilterSample.prototype.changeQuality = function(element) {
@@ -93,14 +84,12 @@ FilterSample.prototype.changeQuality = function(element) {
 FilterSample.prototype.toggleFilter = function(element) {
   this.source.disconnect(0);
   this.filter.disconnect(0);
-  // Check if we want to enable the filter.
+
   if (element.checked) {
-    // Connect through the filter.
     this.source.connect(this.filter);
     this.filter.connect(context.destination);
 
   } else {
-    // Otherwise, connect directly.
     this.source.connect(context.destination);
   }
 };
