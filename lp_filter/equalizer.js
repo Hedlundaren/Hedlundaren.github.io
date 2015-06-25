@@ -1,5 +1,4 @@
-alert("Ibland tar det tid för ljudfilen att ladda...\nVänligen ha tålamod!");
-
+alert("Fungerar:\nChrome\nMozilla Firefox\n\nFungerar ej:\nInternet Explorer\nSafari");
 
 var audio = new Audio();
 	audio.src='visa.mp3';
