@@ -124,6 +124,20 @@ a{
 	
 }
 
+.ans_black
+{
+	margin:10px;
+	padding:10px;
+	color: black;
+	font-size: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
+	text-align: center;
+	text-shadow: 3px 3px rgba(0, 0, 0, 0.15);
+	
+}
+
 .center {
 	font-size: 17px;
     margin-left: auto;
@@ -211,28 +225,29 @@ a{
 	opacity:1;
 	padding-bottom:0px;
 	margin-bottom:0px;
-	min-height:600px;
+	min-height:800px;
 }
 #text_holder{
 	position:absolute;
 	margin:0px;
+	opacity: 1;
 	padding:0px;
 	width:35%;
 	height:100%;
 	min-height:500px;
-
-	background: rgba(255,255,255,0.3);
+	background: rgba(255,255,255,1);
 }
 
 #info_holder{
 	position:absolute;
 	margin:0px;
 	padding:0px;
+	opacity: 1;
 	width:35%;
 	height:100%;
 	right:0px;
 	min-height:500px;
-	background: rgba(255,255,255,0.3);
+	background: rgba(255,255,255,1);
 }
 
 #canvas1{
@@ -243,17 +258,18 @@ a{
 	height:100%;
 	right:0px;
 	min-height:500px;
-	background: rgba(0,0,0,0.3);
+	background: rgba(0,0,0,0.6);
 }
 
 #canvas2{
+	z-index: 1;
 	position:absolute;
 	margin:0px;
 	padding:0px;
 	width:65%;
 	height:100%;
 	left:0px;
-	background: rgba(0,0,0,0.3);
+	background: rgba(0,0,0,0.6);
 }
 
 #kontakt{
@@ -266,7 +282,7 @@ a{
 	opacity:1;
 	padding-bottom:0px;
 	margin-bottom:0px;
-	min-height:600px;
+	min-height:800px;
 }
 
 
@@ -315,7 +331,7 @@ a{
 	opacity:0.6;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width:1000px) {
     #name_title {
         display: none !important;
     }
@@ -329,3 +345,5 @@ a{
         display: none !important;
     }
 }
+
+

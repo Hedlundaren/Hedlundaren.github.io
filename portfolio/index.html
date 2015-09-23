@@ -1,17 +1,230 @@
 <html>
 <head>
-	<title>Simon Hedlund</title>
+	<meta charset="iso-8859-1">
+	<title>Portfolio - Simon Hedlund</title>
+	<link rel="shortcut icon" href="icon.ico">
+	<link rel="stylesheet" type="text/css" href="style_index.css">
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
 
-	<meta charset="utf-8">
-	<style type="text/css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	
 
-		body{
-			background: pink;
-		}
-	</style>
+
+	<!--3D - threeJs-->
+	<script src="js/Detector.js"></script>
+	<script type="text/javascript" src="js/three.min.js"></script>
+	<script type="text/javascript" src="js/TrackballControls.js"></script>
+
+
+	<script type="text/javascript" src="main.js"></script>
+
+
+
 </head>
 <body>
-<h2>PORTFOLIO</h2>
+
+<img src="images/background2.jpg" alt="background" id="background">
+	
+	
+<header>
+
+<div id="name_title"><h1><a href="">Simon Hedlund</a></h1></div>	
+<a href=""><img id="profil_pic" src="images/profil.png"/></a>
+	<div id="btn_holder">
+<button id="btn1" type="button" class="center" >CV</button>
+<button id="btn2" type="button" class="center">Portfolio</button>
+<button id="btn3" type="button" class="center">Kontakt</button>
+</div>
+
+
+</header>
+
+
+
+
+<div id="distancer"></div>
+
+<div id="container"></div>
+<div id="portfolio">
+	
+	<div id="threeD">
+	<p class="subject_title">Animation & Modelling</p>
+		<div class="subject">
+			<img class ="portfolio_boxes" src="images/box1.png"/>
+			<img class ="portfolio_boxes" src="images/box2.png"/>
+			<img class ="portfolio_boxes" src="images/box3.png"/>
+			<img class ="portfolio_boxes" src="images/box4.png"/>
+		</div>
+	</div>
+	
+	<div id="programming">
+	<p class="subject_title">Programming</p>
+		<div class="subject">
+			<img class ="portfolio_boxes" src="images/box1.png"/>
+			<img class ="portfolio_boxes" src="images/box2.png"/>
+			<img class ="portfolio_boxes" src="images/box3.png"/>
+			<img class ="portfolio_boxes" src="images/box4.png"/>
+		</div>
+	</div>
+
+	<div id="web">
+	<p class="subject_title">Web</p>
+		<div class="subject">
+			<img class ="portfolio_boxes" src="images/box1.png"/>
+			<img class ="portfolio_boxes" src="images/box2.png"/>
+			<img class ="portfolio_boxes" src="images/box3.png"/>
+			<img class ="portfolio_boxes" src="images/box4.png"/>
+		</div>
+	</div>
+
+</div>
+
+<div id="CV">
+	
+	<div id="text_holder"><p class="ans_black">CV</p></div>
+	<div id="canvas1"><canvas id="glcanvas" name="glcanvas" width="500" height="500">
+    Your browser doesn't appear to support the HTML5 <code>&lt;canvas&gt;</code> element.
+  </canvas></div>
+
+</div>
+
+<div id="kontakt">
+	<div id="canvas2"></div>
+	<div id="info_holder"><p class="ans_black">Kontakt</p></div>
+	
+</div>
+
+
+
+<script>
+
+
+
+//FADE
+$(document).ready(function(){
+$(".center").hover(
+
+function() {
+$(this).stop().animate({"opacity": "1"}, "fast");
+	$("html, body").animate({ scrollTop: 0 }, "fast");
+  return false;
+},
+
+function() {
+$(this).stop().animate({"opacity": "0.6"}, "medium");
+});
+
+$(".portfolio_boxes").hover(
+function() {
+$(this).stop().animate({"opacity": "0.9"}, "fast");
+
+},
+function() {
+$(this).stop().animate({"opacity": "0.7"}, "fast");
+});
+
+$("#name_title").hover(
+function() {
+$(this).stop().animate({"opacity": "1.0"}, "medium");
+
+},
+function() {
+$(this).stop().animate({"opacity": "0.8"}, "medium");
+});
+
+$(function() {
+  $('#name_title').animate({ 
+
+    height: "100px",
+    opacity: "1",
+    visibility: "true" 
+
+}, 500, 'swing');
+});
+
+$(function() {
+  $('#profil_pic').animate({ 
+
+    opacity: "1",
+    visibility: "true" 
+
+}, 200, 'swing');
+});
+
+$(function() {
+  $('header').animate({ 
+
+    opacity: "1",
+    visibility: "true", 
+    height: "110px"
+}, 500, 'swing');
+});
+
+
+
+
+});
+
+
+
+$( '#container').css( "visibility", "visible" );
+
+
+//RANDOM FUNKTIONER
+
+$("#portfolio").hide();
+$("#kontakt").hide();
+$("#CV").hide();
+
+var speed1 = 'medium';
+var speed2 = 'medium';
+var speed3 = 'fast';
+//CV
+$( "#btn1" ).click(function() {
+	
+	$('#portfolio').hide();
+	$('#kontakt').hide();
+	//$('#container').css( "visibility", "hidden" );
+
+	$( '#CV').css( "visibility", "visible" );
+ 	$('#CV').fadeToggle(speed1);
+	//$( "#background" ).replaceWith( "<img id='background' src='images/pic1.jpg'/>" );
+});
+
+//Portfolio
+$( "#btn2" ).click(function() {
+	$('#CV').hide(speed1);
+	$('#kontakt').hide(speed1);
+	//$('#container').css( "visibility", "hidden" );
+
+	$( '#portfolio').css( "visibility", "visible" );
+	$('#portfolio').fadeToggle(speed1);
+
+	//$( "#txt1" ).replaceWith( "<div id='txt1' class='ans'>" + "" + "</div>" );
+});
+
+//Konstakt
+$( "#btn3" ).click(function() {
+	$('#portfolio').hide();
+	$('#CV').hide();
+	//$('#container').css( "visibility", "hidden" );
+	
+	$( '#kontakt').css( "visibility", "visible" );
+	$('#kontakt').fadeToggle(speed1);
+
+});
+
+
+</script>
+
+
+
+<footer>
+
+<p class="ans" style="width:400px">Simon Hedlund</p>
+<button id="get_up" type="button" class="center" onClick = "up()"; >top</button>
+
 
 </body>
-</html>
+</footer>
+
