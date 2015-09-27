@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	
+
 
 
 	<!--3D - threeJs-->
@@ -16,14 +16,11 @@
 	<script type="text/javascript" src="js/TrackballControls.js"></script>
 
 
-	<script type="text/javascript" src="main.js"></script>
-
-
 
 </head>
 <body>
 
-<img src="images/background2.jpg" alt="background" id="background">
+<img src="images/background.jpg" alt="background" id="background">
 	
 	
 <header>
@@ -31,9 +28,13 @@
 <div id="name_title"><h1><a href="">Simon Hedlund</a></h1></div>	
 <a href=""><img id="profil_pic" src="images/profil.png"/></a>
 	<div id="btn_holder">
-<button id="btn1" type="button" class="center" >CV</button>
+<button id="btn1" type="button" class="center" >CV </button>
 <button id="btn2" type="button" class="center">Portfolio</button>
 <button id="btn3" type="button" class="center">Kontakt</button>
+<div id="btn1_line" class="btn_line"></div>
+<div id="btn2_line" class="btn_line"></div>
+<div id="btn3_line" class="btn_line"></div>
+
 </div>
 
 
@@ -48,31 +49,115 @@
 <div id="portfolio">
 	
 	<div id="threeD">
+	<div id="threeD_color" class="subject_line"></div>
 	<p class="subject_title">Animation & Modelling</p>
 		<div class="subject">
-			<img class ="portfolio_boxes" src="images/box1.png"/>
-			<img class ="portfolio_boxes" src="images/box2.png"/>
-			<img class ="portfolio_boxes" src="images/box3.png"/>
-			<img class ="portfolio_boxes" src="images/box4.png"/>
+
+			<a href=""><div id="anim1" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+			<a href=""><div id="anim2" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Rob's vengeance</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+			
+
+			<img class ="portfolio_boxes" src="images/anim1.png"/>
+			<img class ="portfolio_boxes" src="images/anim2.png"/>
+
+			<a href=""><div id="anim3" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Mixed</p> 
+				<p class="box_font2">Rendering</p> 
+			</div></a>
+			
+			<a href=""><div id="anim4" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Cafe Lok</p> 
+				<p class="box_font2">Modeling</p> 
+			</div></a>
+
+			<img class ="portfolio_boxes" src="images/anim3.png"/>
+			<img class ="portfolio_boxes" src="images/anim4.png"/>
 		</div>
 	</div>
 	
 	<div id="programming">
+	<div id="programming_color" class="subject_line"></div>
+
 	<p class="subject_title">Programming</p>
 		<div class="subject">
-			<img class ="portfolio_boxes" src="images/box1.png"/>
+			<a href=""><div id="prog1" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+			<a href=""><div id="prog2" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+			<img class ="portfolio_boxes" src="images/prog1.png"/>
 			<img class ="portfolio_boxes" src="images/box2.png"/>
+
+			<a href=""><div id="prog3" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+			<a href=""><div id="prog4" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
 			<img class ="portfolio_boxes" src="images/box3.png"/>
 			<img class ="portfolio_boxes" src="images/box4.png"/>
 		</div>
 	</div>
 
 	<div id="web">
+	<div id="web_color" class="subject_line"></div>
+
 	<p class="subject_title">Web</p>
 		<div class="subject">
-			<img class ="portfolio_boxes" src="images/box1.png"/>
-			<img class ="portfolio_boxes" src="images/box2.png"/>
-			<img class ="portfolio_boxes" src="images/box3.png"/>
+
+			<a href=""><div id="web1" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+			<a href=""><div id="web2" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+
+			<img class ="portfolio_boxes" src="images/web1.png"/>
+			<img class ="portfolio_boxes" src="images/web2.png"/>
+			
+			<a href=""><div id="web3" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+			<a href=""><div id="web4" class="hover_box"> 
+				<img class="box_logo" src="images/play_logo_white.gif"/>
+				<p class="box_font">Looking for host</p> 
+				<p class="box_font2">Animated Short Film</p> 
+			</div></a>
+
+			<img class ="portfolio_boxes" src="images/web3.png"/>
 			<img class ="portfolio_boxes" src="images/box4.png"/>
 		</div>
 	</div>
@@ -90,15 +175,20 @@
 
 <div id="kontakt">
 	<div id="canvas2"></div>
-	<div id="info_holder"><p class="ans_black">Kontakt</p></div>
+	<div id="info_holder">
+	<p class="ans_black">Kontakt</p>
+	<img src="images/cell_phone.jpg" id="cellphone_pic"/>
+	<img src="images/mail.png" id="mail_pic"/>
+
+
+
+	</div>
 	
 </div>
 
 
 
 <script>
-
-
 
 //FADE
 $(document).ready(function(){
@@ -116,11 +206,11 @@ $(this).stop().animate({"opacity": "0.6"}, "medium");
 
 $(".portfolio_boxes").hover(
 function() {
-$(this).stop().animate({"opacity": "0.9"}, "fast");
+$(this).stop().animate({"opacity": "1"}, "fast");
 
 },
 function() {
-$(this).stop().animate({"opacity": "0.7"}, "fast");
+$(this).stop().animate({"opacity": "0.8"}, "fast");
 });
 
 $("#name_title").hover(
@@ -131,6 +221,19 @@ $(this).stop().animate({"opacity": "1.0"}, "medium");
 function() {
 $(this).stop().animate({"opacity": "0.8"}, "medium");
 });
+
+$(".hover_box").hover(
+function() {
+$(this).stop().animate({"opacity": "1"}, 300);
+
+},
+function() {
+$(this).stop().animate({"opacity": "0"}, 200);
+}, function() {
+ $(".box_logo").animate({top: '-=100px'}, 2000);
+  }, function() {
+    $(".box_logo").animate({top: '+=100px'}, 2000);
+  });
 
 $(function() {
   $('#name_title').animate({ 
@@ -165,6 +268,8 @@ $(function() {
 
 });
 
+   
+
 
 
 $( '#container').css( "visibility", "visible" );
@@ -176,11 +281,21 @@ $("#portfolio").hide();
 $("#kontakt").hide();
 $("#CV").hide();
 
+$("#btn1_line").hide();
+$("#btn2_line").hide();
+$("#btn3_line").hide();
+
+
 var speed1 = 'medium';
 var speed2 = 'medium';
 var speed3 = 'fast';
 //CV
 $( "#btn1" ).click(function() {
+	cv_bool = true;
+
+	$("#btn2_line").hide();
+	$("#btn3_line").hide();
+	$("#btn1_line").fadeToggle(speed1);
 	
 	$('#portfolio').hide();
 	$('#kontakt').hide();
@@ -195,6 +310,12 @@ $( "#btn1" ).click(function() {
 $( "#btn2" ).click(function() {
 	$('#CV').hide(speed1);
 	$('#kontakt').hide(speed1);
+
+	$("#btn1_line").hide();
+	$("#btn3_line").hide();
+	$("#btn2_line").fadeToggle(speed1);
+
+
 	//$('#container').css( "visibility", "hidden" );
 
 	$( '#portfolio').css( "visibility", "visible" );
@@ -207,6 +328,12 @@ $( "#btn2" ).click(function() {
 $( "#btn3" ).click(function() {
 	$('#portfolio').hide();
 	$('#CV').hide();
+
+	$("#btn1_line").hide();
+	$("#btn2_line").hide();
+	$("#btn3_line").fadeToggle(speed1);
+
+
 	//$('#container').css( "visibility", "hidden" );
 	
 	$( '#kontakt').css( "visibility", "visible" );
@@ -215,14 +342,30 @@ $( "#btn3" ).click(function() {
 });
 
 
+$( "#canvas1" ).click(function() {
+	$('#CV').hide();
+	$("#btn1_line").hide();
+
+
+});
+
+$( "#canvas2" ).click(function() {
+	
+	$('#kontakt').hide();
+	$("#btn3_line").hide();
+
+
+});
+
 </script>
+	<script type="text/javascript" src="main.js"></script>
 
 
 
 <footer>
 
 <p class="ans" style="width:400px">Simon Hedlund</p>
-<button id="get_up" type="button" class="center" onClick = "up()"; >top</button>
+<button id="get_up" type="button" class="center">top</button>
 
 
 </body>
