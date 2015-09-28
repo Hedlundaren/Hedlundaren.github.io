@@ -103,11 +103,13 @@ a{
 
 #name_title{
 	position: absolute;
-	height:0px;
+	height:100px;
 	opacity: 0.0;
 	width: 300px;
 	margin:0px;
 	padding:0px;
+	top:0px;
+	left:-100px;
 
 }
 
@@ -166,7 +168,7 @@ a{
 #distancer{
 	margin:0px;
 	padding:0px;
-	height: 110px;
+	height: 0px;
 	width:100%;
 }
 
@@ -190,7 +192,7 @@ a{
 #threeD{
 	width: 100%;
 	height: 518px;
-	background: rgba(200,0,250,0.9);
+	background: rgba(10,10,10,0.91);
 	margin:0px;
 	padding:0px;
 
@@ -198,15 +200,14 @@ a{
 
 #programming{
 	width: 100%;
-	background: rgba(0,200,250,0.9);
+	background: rgba(20,20,20,0.91);
 	margin:0px;
 	padding:0px;
 }
 
 #web{
 	width: 100%;
-	background: rgba(0,250,100,0.9);
-
+	background: rgba(10,10,10,0.91);
 	margin:0px;
 	padding:0px;
 }
@@ -307,7 +308,7 @@ a{
 	padding:0px;
 	margin-right:auto;
 	margin-left:auto;
-	opacity:0.8;
+	opacity:1;
 	padding:8px;
 	padding-bottom:0px;
 	margin-bottom:0px;
@@ -319,7 +320,9 @@ a{
 	z-index:1;
 	position:absolute;
 	color:white;
-	font-size: 30px;
+	font-size: 28px;
+	font-weight: 600;
+
 	margin:0px;
 	padding:20px;
 }
@@ -357,9 +360,9 @@ a{
 .subject_line{
 	position:absolute;
 	height: 518px;
-	width: 4px;
+	width: 8px;
 	left:0px;
-	opacity: 0.5;
+	opacity: 1;
 }
 
 #threeD_color{
@@ -407,7 +410,7 @@ a{
 	margin:0px;
 	padding:0px;
 	opacity: 0;
-	background: rgba(200,0,255,0.6);
+	background: rgba(200,0,255,0.8);
 
 }
 
@@ -428,13 +431,14 @@ a{
 .box_font{
 	z-index: -1;
 	position: relative;
-	font-family: Helvetica;
+	font-family: Arial;
 	font-weight: bold;
 	font-size: 18px;
 	color:white;
 	text-align: center;
 	opacity: 1;
 	top: 70px;
+	text-shadow: 2px 2px rgba(0, 0, 0, 0.25);
 
 }
 
@@ -456,16 +460,15 @@ a{
 #anim3{ }
 #anim4{	margin-left: 254px;}
 
-#prog1{ background: rgba(0,200,255,0.6); }
-#prog2{ background: rgba(0,200,255,0.6); margin-left: 254px;}
-#prog3{ background: rgba(0,200,255,0.6); }
-#prog4{	background: rgba(0,200,255,0.6); margin-left: 254px;}
+#prog1{ background: rgba(0,200,255,0.8); }
+#prog2{ background: rgba(0,200,255,0.8); margin-left: 254px;}
+#prog3{ background: rgba(0,200,255,0.8); }
+#prog4{	background: rgba(0,200,255,0.8); margin-left: 254px;}
 
-#web1{background: rgba(0,255,100,0.6); }
-#web2{background: rgba(0,255,100,0.6); margin-left: 254px;}
-#web3{ background: rgba(0,255,100,0.6); }
-#web4{background: rgba(0,255,100,0.6
-	); margin-left: 254px;}
+#web1{background: rgba(0,255,100,0.8); }
+#web2{background: rgba(0,255,100,0.8); margin-left: 254px;}
+#web3{ background: rgba(0,255,100,0.8); }
+#web4{background: rgba(0,255,100,0.8); margin-left: 254px;}
 
 @media screen and (max-width:1000px) {
     #name_title {

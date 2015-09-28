@@ -6,19 +6,24 @@
 	<link rel="stylesheet" type="text/css" href="style_index.css">
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 
 
 	<!--3D - threeJs-->
-	<script src="js/Detector.js"></script>
 	<script type="text/javascript" src="js/three.min.js"></script>
-	<script type="text/javascript" src="js/TrackballControls.js"></script>
+	<script type="text/javascript" src="js/Detector.js"></script>
+	<script src="js/TrackballControls.js"></script>
+	<script src="jquery.js"></script>
+
 
 
 
 </head>
 <body>
+		
+		
+
+
 
 <img src="images/background.jpg" alt="background" id="background">
 	
@@ -158,7 +163,7 @@
 			</div></a>
 
 			<img class ="portfolio_boxes" src="images/web3.png"/>
-			<img class ="portfolio_boxes" src="images/box4.png"/>
+			<img class ="portfolio_boxes" src="images/web4.png"/>
 		</div>
 	</div>
 
@@ -189,86 +194,99 @@
 
 
 <script>
+jQuery.noConflict();
+jQuery(function ($) {
+    // The dollar sign will equal jQuery in this scope
 
-//FADE
-$(document).ready(function(){
-$(".center").hover(
+	//FADE
+	$(document).ready(function(){
+		$(".center").hover(
 
-function() {
-$(this).stop().animate({"opacity": "1"}, "fast");
-	$("html, body").animate({ scrollTop: 0 }, "fast");
-  return false;
-},
+		function() {
+		$(this).stop().animate({"opacity": "1"}, "fast");
+			$("html, body").animate({ scrollTop: 0 }, "fast");
+		  return false;
+		},
 
-function() {
-$(this).stop().animate({"opacity": "0.6"}, "medium");
-});
+		function() {
+		$(this).stop().animate({"opacity": "0.6"}, "medium");
+		});
 
-$(".portfolio_boxes").hover(
-function() {
-$(this).stop().animate({"opacity": "1"}, "fast");
+		$(".portfolio_boxes").hover(
+		function() {
+		$(this).stop().animate({"opacity": "1"}, "fast");
 
-},
-function() {
-$(this).stop().animate({"opacity": "0.8"}, "fast");
-});
+		},
+		function() {
+		$(this).stop().animate({"opacity": "0.8"}, "fast");
+		});
 
-$("#name_title").hover(
-function() {
-$(this).stop().animate({"opacity": "1.0"}, "medium");
+		$("#name_title").hover(
+		function() {
+		$(this).stop().animate({"opacity": "1.0"}, "medium");
 
-},
-function() {
-$(this).stop().animate({"opacity": "0.8"}, "medium");
-});
+		},
+		function() {
+		$(this).stop().animate({"opacity": "0.8"}, "medium");
+		});
 
-$(".hover_box").hover(
-function() {
-$(this).stop().animate({"opacity": "1"}, 300);
+		$(".hover_box").hover(
+		function() {
+		$(this).stop().animate({"opacity": "1"}, 300);
 
-},
-function() {
-$(this).stop().animate({"opacity": "0"}, 200);
-}, function() {
- $(".box_logo").animate({top: '-=100px'}, 2000);
-  }, function() {
-    $(".box_logo").animate({top: '+=100px'}, 2000);
-  });
+		},
+		function() {
+		$(this).stop().animate({"opacity": "0"}, 200);
+		}, function() {
+		 $(".box_logo").animate({top: '-=100px'}, 2000);
+		  }, function() {
+		    $(".box_logo").animate({top: '+=100px'}, 2000);
+		  });
 
-$(function() {
-  $('#name_title').animate({ 
+		$(function() {
+		  $('#name_title').animate({ 
 
-    height: "100px",
-    opacity: "1",
-    visibility: "true" 
+		    visibility: "true",
 
-}, 500, 'swing');
-});
-
-$(function() {
-  $('#profil_pic').animate({ 
-
-    opacity: "1",
-    visibility: "true" 
-
-}, 200, 'swing');
-});
-
-$(function() {
-  $('header').animate({ 
-
-    opacity: "1",
-    visibility: "true", 
-    height: "110px"
-}, 500, 'swing');
-});
+		    opacity: "1.0",
+		  	left:"10px",
 
 
 
+		}, 500, 'swing');
+		});
 
-});
+		$(function() {
+		  $('#profil_pic').animate({ 
 
-   
+		    opacity: "1",
+		    visibility: "true" 
+
+		}, 200, 'swing');
+		});
+
+		$(function() {
+		  $('header').animate({ 
+
+		    opacity: "1",
+		    visibility: "true", 
+		    height: "110px"
+		}, 500, 'swing');
+		});
+
+		$(function() {
+		  $('#distancer').animate({ 
+
+		    opacity: "1",
+		    visibility: "true", 
+		    height: "110px"
+		}, 500, 'swing');
+		});
+
+
+	});
+
+
 
 
 
@@ -354,6 +372,8 @@ $( "#canvas2" ).click(function() {
 	$('#kontakt').hide();
 	$("#btn3_line").hide();
 
+
+});
 
 });
 
