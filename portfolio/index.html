@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="iso-8859-1">
-	<title>Portfolio - Simon Hedlund</title>
+	<title>Portfolio | Simon Hedlund</title>
 	<link rel="shortcut icon" href="icon.ico">
 	<link rel="stylesheet" type="text/css" href="style_index.css">
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
@@ -12,11 +12,12 @@
 	<!--3D - threeJs-->
 	<script type="text/javascript" src="js/three.min.js"></script>
 	<script type="text/javascript" src="js/Detector.js"></script>
+	<script src="js/OrbitControls.js"></script>
 	<script src="js/TrackballControls.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+
 	<script src="jquery.js"></script>
-
-
-
+	<script src="jquery_code.js"></script>
 
 </head>
 <body>
@@ -39,13 +40,28 @@
 <div id="btn1_line" class="btn_line"></div>
 <div id="btn2_line" class="btn_line"></div>
 <div id="btn3_line" class="btn_line"></div>
-
 </div>
+
+			
+<button id="menu_btn" type="button" ><div id="menu_line1" class="menu_line"></div><div id="menu_line2" class="menu_line"></div><div id="menu_line3" class="menu_line"></div></button>
+
 
 
 </header>
 
+<div id="drop_menu">
+	<div id="drop_menu_content">
 
+
+		<ul>
+			<a href=''><li><span>Home</span></li></a>
+			<a href='#'><li><span>Sounds: Off</span></li></a>
+			<a href='#'><li><span>About</span></li></a>
+			<a href="https://google.com"><li ><span>Exit</span></li></a>
+		</ul>
+
+	</div>
+</div>
 
 
 <div id="distancer"></div>
@@ -129,9 +145,8 @@
 	</div>
 
 	<div id="web">
-	<div id="web_color" class="subject_line"></div>
-
-	<p class="subject_title">Web</p>
+		<div id="web_color" class="subject_line"></div>
+		<p class="subject_title">Web</p>
 		<div class="subject">
 
 			<a href=""><div id="web1" class="hover_box"> 
@@ -172,9 +187,7 @@
 <div id="CV">
 	
 	<div id="text_holder"><p class="ans_black">CV</p></div>
-	<div id="canvas1"><canvas id="glcanvas" name="glcanvas" width="500" height="500">
-    Your browser doesn't appear to support the HTML5 <code>&lt;canvas&gt;</code> element.
-  </canvas></div>
+	<div id="canvas1"></div>
 
 </div>
 
@@ -191,194 +204,6 @@
 	
 </div>
 
-
-
-<script>
-jQuery.noConflict();
-jQuery(function ($) {
-    // The dollar sign will equal jQuery in this scope
-
-	//FADE
-	$(document).ready(function(){
-		$(".center").hover(
-
-		function() {
-		$(this).stop().animate({"opacity": "1"}, "fast");
-			$("html, body").animate({ scrollTop: 0 }, "fast");
-		  return false;
-		},
-
-		function() {
-		$(this).stop().animate({"opacity": "0.6"}, "medium");
-		});
-
-		$(".portfolio_boxes").hover(
-		function() {
-		$(this).stop().animate({"opacity": "1"}, "fast");
-
-		},
-		function() {
-		$(this).stop().animate({"opacity": "0.8"}, "fast");
-		});
-
-		$("#name_title").hover(
-		function() {
-		$(this).stop().animate({"opacity": "1.0"}, "medium");
-
-		},
-		function() {
-		$(this).stop().animate({"opacity": "0.8"}, "medium");
-		});
-
-		$(".hover_box").hover(
-		function() {
-		$(this).stop().animate({"opacity": "1"}, 300);
-
-		},
-		function() {
-		$(this).stop().animate({"opacity": "0"}, 200);
-		}, function() {
-		 $(".box_logo").animate({top: '-=100px'}, 2000);
-		  }, function() {
-		    $(".box_logo").animate({top: '+=100px'}, 2000);
-		  });
-
-		$(function() {
-		  $('#name_title').animate({ 
-
-		    visibility: "true",
-
-		    opacity: "1.0",
-		  	left:"10px",
-
-
-
-		}, 500, 'swing');
-		});
-
-		$(function() {
-		  $('#profil_pic').animate({ 
-
-		    opacity: "1",
-		    visibility: "true" 
-
-		}, 200, 'swing');
-		});
-
-		$(function() {
-		  $('header').animate({ 
-
-		    opacity: "1",
-		    visibility: "true", 
-		    height: "110px"
-		}, 500, 'swing');
-		});
-
-		$(function() {
-		  $('#distancer').animate({ 
-
-		    opacity: "1",
-		    visibility: "true", 
-		    height: "110px"
-		}, 500, 'swing');
-		});
-
-
-	});
-
-
-
-
-
-$( '#container').css( "visibility", "visible" );
-
-
-//RANDOM FUNKTIONER
-
-$("#portfolio").hide();
-$("#kontakt").hide();
-$("#CV").hide();
-
-$("#btn1_line").hide();
-$("#btn2_line").hide();
-$("#btn3_line").hide();
-
-
-var speed1 = 'medium';
-var speed2 = 'medium';
-var speed3 = 'fast';
-//CV
-$( "#btn1" ).click(function() {
-	cv_bool = true;
-
-	$("#btn2_line").hide();
-	$("#btn3_line").hide();
-	$("#btn1_line").fadeToggle(speed1);
-	
-	$('#portfolio').hide();
-	$('#kontakt').hide();
-	//$('#container').css( "visibility", "hidden" );
-
-	$( '#CV').css( "visibility", "visible" );
- 	$('#CV').fadeToggle(speed1);
-	//$( "#background" ).replaceWith( "<img id='background' src='images/pic1.jpg'/>" );
-});
-
-//Portfolio
-$( "#btn2" ).click(function() {
-	$('#CV').hide(speed1);
-	$('#kontakt').hide(speed1);
-
-	$("#btn1_line").hide();
-	$("#btn3_line").hide();
-	$("#btn2_line").fadeToggle(speed1);
-
-
-	//$('#container').css( "visibility", "hidden" );
-
-	$( '#portfolio').css( "visibility", "visible" );
-	$('#portfolio').fadeToggle(speed1);
-
-	//$( "#txt1" ).replaceWith( "<div id='txt1' class='ans'>" + "" + "</div>" );
-});
-
-//Konstakt
-$( "#btn3" ).click(function() {
-	$('#portfolio').hide();
-	$('#CV').hide();
-
-	$("#btn1_line").hide();
-	$("#btn2_line").hide();
-	$("#btn3_line").fadeToggle(speed1);
-
-
-	//$('#container').css( "visibility", "hidden" );
-	
-	$( '#kontakt').css( "visibility", "visible" );
-	$('#kontakt').fadeToggle(speed1);
-
-});
-
-
-$( "#canvas1" ).click(function() {
-	$('#CV').hide();
-	$("#btn1_line").hide();
-
-
-});
-
-$( "#canvas2" ).click(function() {
-	
-	$('#kontakt').hide();
-	$("#btn3_line").hide();
-
-
-});
-
-});
-
-</script>
-	<script type="text/javascript" src="main.js"></script>
 
 
 

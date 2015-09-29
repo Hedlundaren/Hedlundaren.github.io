@@ -35,6 +35,8 @@ window.onload = function() {
 	grayness = 0.3;
 
 
+var xTrans, yTrans, zTrans, yMax;
+var sunRadius = 40;
 
 	for(var i = 0; i < 50; i++ ) {
 		
@@ -43,7 +45,29 @@ window.onload = function() {
 		//mat = new THREE.MeshPhongMaterial( {overdraw: true}),
 		cube = new THREE.Mesh( geom, mat );
 		mat.color.setRGB( grayness*0.2, grayness*0.5, grayness*0.5 );
+		
+		cube.position.set( 0,0,0);
 		cube.position.set( range * (0.5 - Math.random()), range * (0.5 - Math.random()), range * (0.5 - Math.random()) );
+		/*
+		xTrans = (Math.random() -0.5)*2*sunRadius; 			
+		yMax = Math.sqrt(sunRadius*sunRadius-xTrans*xTrans);
+
+		yTrans = (Math.random() -0.5)*2*yMax;
+		zTrans;
+
+		if(Math.random() < 0.5)
+		{
+			zTrans = Math.sqrt(sunRadius*sunRadius - xTrans*xTrans - yTrans*yTrans);
+		}
+		else
+			zTrans = -Math.sqrt(sunRadius*sunRadius - xTrans*xTrans - yTrans*yTrans);
+		
+		cube.translateX(xTrans);
+		cube.translateY(yTrans);
+		cube.translateZ(zTrans);
+		*/
+
+
 		cube.rotation.set( Math.random(), Math.random(), Math.random() ).multiplyScalar( 2 * Math.PI );
 		cubes.add( cube );
 	}
