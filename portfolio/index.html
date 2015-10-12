@@ -1,23 +1,21 @@
+<!doctype html>
 <html>
 <head>
-	<meta charset="iso-8859-1">
+	<meta charset="UTF-8">
 	<title>Portfolio | Simon Hedlund</title>
 	<link rel="shortcut icon" href="icon.ico">
 	<link rel="stylesheet" type="text/css" href="style_index.css">
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
 
 
-
-
 	<!--3D - threeJs-->
 	<script type="text/javascript" src="js/three.min.js"></script>
-	<script type="text/javascript" src="js/Detector.js"></script>
-	<script src="js/OrbitControls.js"></script>
 	<script src="js/TrackballControls.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 
 	<script src="jquery.js"></script>
 	<script src="jquery_code.js"></script>
+
 
 </head>
 <body>
@@ -26,193 +24,200 @@
 
 
 
-<img src="images/background.jpg" alt="background" id="background">
-	
-	
-<header>
+	<img src="images/background.jpg" alt="background" id="background">
+		
+		
+	<header>
 
-<div id="name_title"><h1><a href="">Simon Hedlund</a></h1></div>	
-<a href=""><img id="profil_pic" src="images/profil.png"/></a>
+	<div id="name_title"><h1><a href="">Simon Hedlund</a></h1></div>	
+	
+	<a href=""><img id="profil_pic" src="images/profil.png"/></a>
+	
 	<div id="btn_holder">
-<button id="btn1" type="button" class="center" >CV </button>
-<button id="btn2" type="button" class="center">Portfolio</button>
-<button id="btn3" type="button" class="center">Kontakt</button>
-<div id="btn1_line" class="btn_line"></div>
-<div id="btn2_line" class="btn_line"></div>
-<div id="btn3_line" class="btn_line"></div>
-</div>
-
-			
-<button id="menu_btn" type="button" ><div id="menu_line1" class="menu_line"></div><div id="menu_line2" class="menu_line"></div><div id="menu_line3" class="menu_line"></div></button>
-
-
-
-</header>
-
-<div id="drop_menu">
-	<div id="drop_menu_content">
-
-
-		<ul>
-			<a href=''><li><span>Home</span></li></a>
-			<a href='#'><li><span>Sounds: Off</span></li></a>
-			<a href='#'><li><span>About</span></li></a>
-			<a href="https://google.com"><li ><span>Exit</span></li></a>
-		</ul>
-
+		<button id="btn1" type="button" class="center" >CV </button>
+		<button id="btn2" type="button" class="center">Portfolio</button>
+		<button id="btn3" type="button" class="center">Kontakt</button>
+		<div id="btn1_line" class="btn_line"></div>
+		<div id="btn2_line" class="btn_line"></div>
+		<div id="btn3_line" class="btn_line"></div>
 	</div>
-</div>
+
+				
+	<button id="menu_btn" type="button" ><div id="menu_line1" class="menu_line"></div><div id="menu_line2" class="menu_line"></div><div id="menu_line3" class="menu_line"></div></button>
 
 
-<div id="distancer"></div>
 
-<div id="container"></div>
-<div id="portfolio">
-	
-	<div id="threeD">
-	<div id="threeD_color" class="subject_line"></div>
-	<p class="subject_title">Animation & Modelling</p>
-		<div class="subject">
+	</header>
 
-			<a href=""><div id="anim1" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
+	<div id="drop_menu">
+		<div id="drop_menu_content">
 
-			<a href=""><div id="anim2" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Rob's vengeance</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
-			
 
-			<img class ="portfolio_boxes" src="images/anim1.png"/>
-			<img class ="portfolio_boxes" src="images/anim2.png"/>
+			<ul>
+				<a href=''><li><span>Home</span></li></a>
+				<a href='#'><li><span>Sounds: Off</span></li></a>
+				<a href='#'><li><span>About</span></li></a>
+				<a href="https://google.com"><li ><span>Exit</span></li></a>
+			</ul>
 
-			<a href=""><div id="anim3" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Mixed</p> 
-				<p class="box_font2">Rendering</p> 
-			</div></a>
-			
-			<a href=""><div id="anim4" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Cafe Lok</p> 
-				<p class="box_font2">Modeling</p> 
-			</div></a>
-
-			<img class ="portfolio_boxes" src="images/anim3.png"/>
-			<img class ="portfolio_boxes" src="images/anim4.png"/>
-		</div>
-	</div>
-	
-	<div id="programming">
-	<div id="programming_color" class="subject_line"></div>
-
-	<p class="subject_title">Programming</p>
-		<div class="subject">
-			<a href=""><div id="prog1" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
-
-			<a href=""><div id="prog2" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
-
-			<img class ="portfolio_boxes" src="images/prog1.png"/>
-			<img class ="portfolio_boxes" src="images/box2.png"/>
-
-			<a href=""><div id="prog3" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
-
-			<a href=""><div id="prog4" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
-
-			<img class ="portfolio_boxes" src="images/box3.png"/>
-			<img class ="portfolio_boxes" src="images/box4.png"/>
 		</div>
 	</div>
 
-	<div id="web">
-		<div id="web_color" class="subject_line"></div>
-		<p class="subject_title">Web</p>
-		<div class="subject">
 
-			<a href=""><div id="web1" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
+	<div id="distancer"></div>
 
-			<a href=""><div id="web2" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
+	<div id="container"></div>
 
 
-			<img class ="portfolio_boxes" src="images/web1.png"/>
-			<img class ="portfolio_boxes" src="images/web2.png"/>
-			
-			<a href=""><div id="web3" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
+	<div id="portfolio">
+		
+		<div id="threeD">
+		<div id="threeD_color" class="subject_line"></div>
+		<p class="subject_title">Animation & Modelling</p>
+			<div class="subject">
 
-			<a href=""><div id="web4" class="hover_box"> 
-				<img class="box_logo" src="images/play_logo_white.gif"/>
-				<p class="box_font">Looking for host</p> 
-				<p class="box_font2">Animated Short Film</p> 
-			</div></a>
+				<a href=""><div id="anim1" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
 
-			<img class ="portfolio_boxes" src="images/web3.png"/>
-			<img class ="portfolio_boxes" src="images/web4.png"/>
+				<a href=""><div id="anim2" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Rob's vengeance</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+				
+
+				<img class ="portfolio_boxes" src="images/anim1.png"/>
+				<img class ="portfolio_boxes" src="images/anim2.png"/>
+
+				<a href=""><div id="anim3" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Mixed</p> 
+					<p class="box_font2">Rendering</p> 
+				</div></a>
+				
+				<a href=""><div id="anim4" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Cafe Lok</p> 
+					<p class="box_font2">Modeling</p> 
+				</div></a>
+
+				<img class ="portfolio_boxes" src="images/anim3.png"/>
+				<img class ="portfolio_boxes" src="images/anim4.png"/>
+			</div>
+		</div>
+		
+		<div id="programming">
+		<div id="programming_color" class="subject_line"></div>
+
+		<p class="subject_title">Programming</p>
+			<div class="subject">
+				<a href=""><div id="prog1" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+				<a href=""><div id="prog2" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+				<img class ="portfolio_boxes" src="images/prog1.png"/>
+				<img class ="portfolio_boxes" src="images/box2.png"/>
+
+				<a href=""><div id="prog3" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+				<a href=""><div id="prog4" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+				<img class ="portfolio_boxes" src="images/box3.png"/>
+				<img class ="portfolio_boxes" src="images/box4.png"/>
+			</div>
+		</div>
+
+		<div id="web">
+			<div id="web_color" class="subject_line"></div>
+			<p class="subject_title">Web</p>
+			<div class="subject">
+
+				<a href=""><div id="web1" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+				<a href=""><div id="web2" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+
+				<img class ="portfolio_boxes" src="images/web1.png"/>
+				<img class ="portfolio_boxes" src="images/web2.png"/>
+				
+				<a href=""><div id="web3" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+				<a href=""><div id="web4" class="hover_box"> 
+					<img class="box_logo" src="images/play_logo_white.gif"/>
+					<p class="box_font">Looking for host</p> 
+					<p class="box_font2">Animated Short Film</p> 
+				</div></a>
+
+				<img class ="portfolio_boxes" src="images/web3.png"/>
+				<img class ="portfolio_boxes" src="images/web4.png"/>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="CV">
+		
+		<div id="text_holder"><p class="ans_black">CV</p>
+			<div id="contact_text">Hej, jag heter Simon, anställ mig pls. 
+			</div>
+		</div>
+		<div id="canvas1"></div>
+
+	</div>
+
+	<div id="kontakt">
+		<div id="canvas2"></div>
+		<div id="info_holder">
+		<p class="ans_black">Kontakt</p>
+		<img id="silhouette" src="images/silhouette.jpg"/>
+			<div id="contact_text">
+				Mig kan ni kontakta när ni vill, om jag inte svarar så är det för att jag inte orkar.
+
+				<img src="images/cell_phone.jpg" id="cellphone_pic"/>
+				<h2 class ="contact_info"> 0768 15 15 70 </h2>
+				<img src="images/mail.png" id="mail_pic"/>
+				<h2 id ="mail" class ="contact_info"> sermonhedlund@gmail.com</h2>
+			</div>
 		</div>
 	</div>
 
-</div>
+	<footer>
+		<p class="ans" style="width:400px">Simon Hedlund</p>
+		<button id="get_up" type="button" class="center">top</button>
+	</footer>
 
-<div id="CV">
 	
-	<div id="text_holder"><p class="ans_black">CV</p></div>
-	<div id="canvas1"></div>
-
-</div>
-
-<div id="kontakt">
-	<div id="canvas2"></div>
-	<div id="info_holder">
-	<p class="ans_black">Kontakt</p>
-	<img src="images/cell_phone.jpg" id="cellphone_pic"/>
-	<img src="images/mail.png" id="mail_pic"/>
-
-
-
-	</div>
-	
-</div>
-
-
-
-
-<footer>
-
-<p class="ans" style="width:400px">Simon Hedlund</p>
-<button id="get_up" type="button" class="center">top</button>
-
-
 </body>
-</footer>
 
+</html>

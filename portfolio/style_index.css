@@ -40,14 +40,14 @@ canvas {
 }
 
 ul{
-	width:100%;
+	width:115px;
 	height: 100%;
 	margin:0px;
 	padding:5px;
 }
 
 li{
-	width:100%;
+	width:115px;
 	height:30px;
 	display: block;
 	font-size: 20px;
@@ -282,11 +282,12 @@ a{
 }
 
 #canvas1{
-	position:relative;
+	position:absolute;
 	margin:0px;
 	padding:0px;
 
 	height:100%;
+	width:100%;
 	right:0px;
 	min-height:500px;
 	background: rgba(0,0,0,0.6);
@@ -299,7 +300,6 @@ a{
 	padding:0px;
 	width:65%;
 	height:100%;
-	left:0px;
 	background: rgba(0,0,0,0.6);
 }
 
@@ -363,30 +363,12 @@ a{
 	opacity:0.6;
 }
 
-#cellphone_pic{
-	position:absolute;
-	z-index:1;
-	top:100px;
-	left:40px;
-	width:60px;
-	height:60px;
-	opacity:0.6;
-}
 
-#mail_pic{
-	position:absolute;
-	z-index:1;
-	top:200px;
-	left:40px;
-	width:60px;
-	height:60px;
-	opacity:0.6;
-}
 
 .subject_line{
 	position:absolute;
 	height: 512px;
-	width: 8px;
+	width: 6px;
 	left:0px;
 	opacity: 1;
 }
@@ -494,7 +476,7 @@ a{
 #web1{background: rgba(0,255,100,0.8); }
 #web2{background: rgba(0,255,100,0.8); margin-left: 254px;}
 #web3{ background: rgba(0,255,100,0.8); }
-#web4{background: rgba(0,255,100,0.8); margin-left: 254px;}
+#web4{background: rgba(0,255,100,0.8); margin-left: 254px;} 
 
 #menu_btn{
 
@@ -554,6 +536,59 @@ a{
 	right:0px;
 	top:28px;
 
+}
+
+#contact_text{
+	font-style: helvetica;
+	font-size: 20px;
+	font-weight: bold;
+	padding-left: 30px; 
+	padding-right: 20px; 
+	opacity: 0.7;
+}
+
+#cellphone_pic{
+	position:absolute;
+	z-index:1;
+	margin-top: 40px;
+	left:30px;
+	width:60px;
+	height:60px;
+	opacity:0.7;
+}
+
+#mail_pic{
+	position:absolute;
+	z-index:1;
+	margin-top: 40px;
+	left:30px;
+	width:60px;
+	height:60px;
+	opacity:0.7;
+}
+
+.contact_info{
+	position:relative;
+	left: 80px;
+	margin-top: 15px;
+	padding: 10px;
+	font-size: 35px;
+	opacity: 0.5;
+}
+
+#mail{
+	margin-top: 35px;
+	font-size: 30px;
+
+}
+
+#silhouette{
+	width: 240px;
+	height: 200px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.7;
 }
 
 @media screen and (max-width:1000px) {
