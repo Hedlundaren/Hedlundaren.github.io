@@ -94,14 +94,19 @@ a{
 
 #background
 {
+
 	width: 100%;
-	min-width: 3000px;
-	
+	height:100%;
 	margin: 0px;
 	padding: 0px;
-	z-index: -1;
+	z-index: -3;
 	position: fixed;
 
+
+	background: -webkit-radial-gradient(circle, red, yellow, green); /* For Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(circle, red, yellow, green); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(circle, red, yellow, green); /* For Fx 3.6 to 15 */
+    background: radial-gradient( #000000, #111111); /* Standard syntax (must be last) */
 }
 
 #glcanvas{
@@ -252,7 +257,7 @@ a{
 	opacity:1;
 	padding-bottom:0px;
 	margin-bottom:0px;
-	min-height:800px;
+	min-height:850px;
 }
 #text_holder{
 	z-index: 2;
@@ -270,8 +275,6 @@ a{
 #info_holder{
 	z-index: 2;
 	position:absolute;
-	margin:0px;
-	padding:0px;
 	opacity: 1;
 	width:35%;
 	min-width: 500px; 
@@ -279,6 +282,8 @@ a{
 	right:0px;
 	min-height:500px;
 	background: rgba(255,255,255,1);
+	margin:0px;
+	padding:0px;
 }
 
 #canvas1{
@@ -298,7 +303,7 @@ a{
 	position:absolute;
 	margin:0px;
 	padding:0px;
-	width:65%;
+	width:100%;
 	height:100%;
 	background: rgba(0,0,0,0.6);
 }
@@ -308,12 +313,10 @@ a{
 	position:relative;
 	visibility: hidden;
 	width: 100%;
+	opacity:1;
+	min-height:800px;
 	margin:0px;
 	padding:0px;
-	opacity:1;
-	padding-bottom:0px;
-	margin-bottom:0px;
-	min-height:800px;
 }
 
 

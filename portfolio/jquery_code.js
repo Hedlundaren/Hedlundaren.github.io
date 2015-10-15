@@ -128,7 +128,7 @@ $("#btn1_line").hide();
 $("#btn2_line").hide();
 $("#btn3_line").hide();
 $("#get_up").hide();
-$("footer").hide();
+//$("footer").hide();
 
 
 var speed1 = 'medium';
