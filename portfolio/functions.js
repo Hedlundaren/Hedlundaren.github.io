@@ -35,13 +35,13 @@ function checkIfDoneLoading(firstLoad) {
 	if (firstLoad) {
 		$("#loading-text").text(calculateLoadedPercent(false) + "% loaded");
 
-		if( percentLoaded > 100 || frameCounter >= 50) { //(frameCounter >= 20)
+		if( percentLoaded > 100 && frameCounter >= 10) { //(frameCounter >= 20)
 			//camera.position.z = 0;		//put camera in sun and allow for zoom out
-			
-			$("#dim-screen").fadeOut(500, "swing");
+				
+			$("#dim-screen").fadeOut(100, "swing");
 			appLoaded = true;
 
-
+			spinner.stop();	
 
 				//JQuery when app is done loading
 				$(function() {
@@ -84,7 +84,7 @@ function checkIfDoneLoading(firstLoad) {
 					}, 500, 'swing');
 				});
 			
-				spinner.stop();	
+
 			}
 		}
 	}
