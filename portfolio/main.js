@@ -1,6 +1,8 @@
 
+
 var frameCounter = 0,
 percentLoaded = 1;
+
 window.onload = function() {
 	showLoadingSpinner();
 
