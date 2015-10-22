@@ -1,6 +1,9 @@
 
+var frameCounter = 0,
+percentLoaded = 1;
 window.onload = function() {
-	
+	showLoadingSpinner();
+
 	var container = document.getElementById( 'container' ),
 		containerWidth, containerHeight,
 		renderer,
@@ -10,7 +13,10 @@ window.onload = function() {
 		geom,
 		range = 60,
 		grayness,
-		controls;
+		controls,
+		appLoaded = false;
+
+	
 
 	containerWidth = container.clientWidth;
 	containerHeight = container.clientHeight;
@@ -49,6 +55,7 @@ window.onload = function() {
 		cube.position.set( range * (0.5 - Math.random()), range * (0.5 - Math.random()), range * (0.5 - Math.random()) );
 		cube.rotation.set( Math.random(), Math.random(), Math.random() ).multiplyScalar( 2 * Math.PI );
 		cubes.add( cube );
+		percentLoaded += 2;
 	}
 	controls = new THREE.TrackballControls( camera, container );
 	controls.zoomSpeed = 0.1;
@@ -74,6 +81,12 @@ window.onload = function() {
 	}
 
 	function animate() {
+	
+		 if(!appLoaded) {
+			frameCounter++;	
+			checkIfDoneLoading(true);
+		}
+
 		sceneGraph.rotation.y += 0.0009;
 		requestAnimationFrame( animate );
 		controls.update();

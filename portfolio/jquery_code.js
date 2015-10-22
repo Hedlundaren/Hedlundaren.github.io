@@ -69,45 +69,7 @@ jQuery(function ($) {
 
 
 
-		$(function() {
-		  $('#name_title').animate({ 
-
-		    visibility: "true",
-
-		    opacity: "1.0",
-		  	left:"10px",
-
-
-
-		}, 500, 'swing');
-		});
-
-		$(function() {
-		  $('#profil_pic').animate({ 
-
-		    opacity: "1",
-		    visibility: "true" 
-
-		}, 200, 'swing');
-		});
-
-		$(function() {
-		  $('header').animate({ 
-
-		    opacity: "1",
-		    visibility: "true", 
-		    height: "110px"
-		}, 500, 'swing');
-		});
-
-		$(function() {
-		  $('#distancer').animate({ 
-
-		    opacity: "1",
-		    visibility: "true", 
-		    height: "110px"
-		}, 500, 'swing');
-		});
+		
 
 
 	});
