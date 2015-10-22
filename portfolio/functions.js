@@ -37,7 +37,7 @@ function checkIfDoneLoading(firstLoad) {
 
 		if( percentLoaded > 100 || frameCounter >= 50) { //(frameCounter >= 20)
 			//camera.position.z = 0;		//put camera in sun and allow for zoom out
-			spinner.stop();		
+			
 			$("#dim-screen").fadeOut(500, "swing");
 			appLoaded = true;
 
@@ -83,6 +83,8 @@ function checkIfDoneLoading(firstLoad) {
 						height: "110px"
 					}, 500, 'swing');
 				});
+			
+				spinner.stop();	
 			}
 		}
 	}
