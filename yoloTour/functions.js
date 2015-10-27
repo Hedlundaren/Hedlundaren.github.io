@@ -21,7 +21,6 @@ function drawRoute() {
 		phi += stepsize2;
 	}
 
-
 }
 
 function drawLine(theta, phi, theta2, phi2, theta3, phi3) {
@@ -92,7 +91,7 @@ function loadStars(){
 		size   = parameters[i][2];
 
 		materials[i] = new THREE.PointCloudMaterial( { size: size, map: sprite, blending: THREE.AdditiveBlending, 
-			depthTest: true, transparent : true, alphaTest: 0.015, opacity: 0.05, fog: 0.8} );
+			depthTest: true, transparent : true, alphaTest: 0.015, opacity: 0.25, fog: 0.8} );
 
 		materials[i].color.setHSL( color[0], color[1], color[2] );
 
@@ -106,10 +105,14 @@ function loadStars(){
 
 
 	}
+
+	for (var i = 0; i < stars.length; ++i){sceneGraph.add(stars[i]);}
 }
 
 
 function loadClouds(){
+	
+	cloudGroup =new THREE.Object3D;
 	geometry = new THREE.Geometry();
 	var sunRadius = 5.3;
 	sprite1 = THREE.ImageUtils.loadTexture( "textures/sprites/cloud1.png", null);
@@ -179,6 +182,9 @@ function loadClouds(){
 
 
 	}
+
+	for (var i = 0; i < clouds.length; ++i){cloudGroup.add(clouds[i]);}
+			sceneGraph.add(cloudGroup);
 }
 
 function loadModels(){
@@ -242,9 +248,6 @@ function loadBasics(){
 
 			var A_light = new THREE.AmbientLight( 0xdddddd ); // soft white light
 			sceneGraph.add( A_light );
-	
-			
-
 
 			sunGroup =new THREE.Object3D;
 			//***********************************
@@ -262,7 +265,6 @@ function loadBasics(){
 
 
 			//ADD BUS
-
 			busGroup =new THREE.Object3D;
 			daBus =new THREE.Object3D;
 			var busGeometry = new THREE.SphereGeometry( 1, 32, 32 );
@@ -273,10 +275,7 @@ function loadBasics(){
 			busSphere.position.x = 10;
 			//busGroup.add( busSphere);
 			sceneGraph.add(busGroup);
-
-
-
-			
+	
 
 			var pathGeometry = new THREE.TorusGeometry( 10, 0.1, 10, 100 );
 			var pathMaterial = new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture("textures/rainbow.png"), transparent: true, opacity: 0.3 });
