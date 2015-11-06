@@ -16,7 +16,8 @@ window.onload = function() {
 		range = 60,
 		grayness,
 		controls,
-		appLoaded = false;
+		appLoaded = false,
+		time;
 
 	
 
@@ -88,8 +89,10 @@ window.onload = function() {
 			frameCounter++;	
 			checkIfDoneLoading(true);
 		}
+		
+		time = Date.now() / 1000;
 
-		sceneGraph.rotation.y += 0.0009;
+		sceneGraph.rotation.y = time/10;
 		requestAnimationFrame( animate );
 		controls.update();
 		renderer.render( scene, camera );
