@@ -32,3 +32,9 @@ canvas {
 
 }
 
+#sound{
+	position: fixed;
+	bottom: 0;
+	opacity: 0;
+}
+
