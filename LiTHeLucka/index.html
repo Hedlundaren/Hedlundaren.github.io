@@ -20,7 +20,8 @@
 		<script>
 			var time = new Date();
 			var loader2;
-			var mouseX, mouseY;
+			var mouseX = 0.1;
+			var mouseY = 0.1;
 
 			var stars = [];
 			var clouds = [];
@@ -34,33 +35,17 @@
 			var cloudGroup;
 
 			var scene = new THREE.Scene();
-			//scene.fog = new THREE.FogExp2( 0xffffff, 0.009 );
 
 			var camera = new THREE.PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 0.1, 200000 );
 			scene.add(camera);
-			
-			//scene.fog = new THREE.Fog( 0x000000, 30, 10005 );
 			
 			var renderer = new THREE.WebGLRenderer({ alpha: true, antialiasing: true });
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 			renderer.shadowMapEnabled = true;
 			renderer.shadowMapType = THREE.PCFSoftShadowMap;
-			//renderer.setClearColorHex( 0xccccbb, 1 );
 			renderer.setClearColor ( 0xB3EAFF, 0.6 );
-
-			//Skapar en grupp som ska innehålla hela scengrafen
 			sceneGraph = new THREE.Object3D;
-
-			clock = new THREE.Object3D;
-			secondHand = new THREE.Object3D;
-			minuteHand = new THREE.Object3D;
-			hourHand = new THREE.Object3D;
-			clock.add(secondHand);
-			clock.add(minuteHand);
-			clock.add(hourHand);
-			sceneGraph.add(clock);
-
 
 			/* Camera Settings */
 			camera.position.z = 350;
@@ -68,31 +53,15 @@
 			camera.position.y = 0;
 			camera.lookAt(new THREE.Vector3(0,0,0));
 
-			document.getElementById('lucia').style.display = 'none'; 
-
-
-			addLights();
-			//loadClock();
 			loadSnowflakes();
-			loadBlottartuba();
 			loadBlottartuba_closed();
-			
-			visibility(blottartuba,false);
-			scene.add(sceneGraph);
-			
-			sceneGraph.rotation.z = 0;
-			clock.rotation.y = -Math.PI/2;
-			clock.scale.x = 10;
-			clock.scale.y = 10;
-			clock.scale.z = 10;
+			loadBlottartuba();
 
+			scene.add(sceneGraph);
+			sceneGraph.rotation.z = 0;
 			sceneGraph.scale.x = 20;
 			sceneGraph.scale.y = 20;
 			sceneGraph.scale.z = 20;
-			
-			//console.log(flakes[5].position);
-//hej
-
 
 
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -137,8 +106,6 @@
 				sceneGraph.rotation.y = mouseX/5 + sceneGraph.rotation.y;
 				sceneGraph.rotation.x = mouseY/5;
 				
-				setHands();
-
 				requestAnimationFrame( render );
 				renderer.render(scene, camera);
 			};

@@ -4,14 +4,14 @@ body {
 	background: #000000;
 	cursor: url(images/Blottartuban.png), auto;
 }
+
 canvas { 
 	z-index: 1;
 	width: 100%; 
 	height: 100%; 
 	display: block;
 	background-image: url("images/background.jpg");
-	 background-size: 100% 100%;
-
+	background-size: 100% 100%;
 }
 
 #gojul{
@@ -19,7 +19,8 @@ canvas {
 	display: block;
 	margin: auto;
 	padding:0;
-
+	left:0;
+	top: 0;
 }
 
 #lucia{
@@ -29,7 +30,7 @@ canvas {
   width: 700px;
   transform: translate(-50%, -50%);
   opacity: 0.9;
-
+  display: none;
 }
 
 #sound{
