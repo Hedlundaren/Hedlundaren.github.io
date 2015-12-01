@@ -11,13 +11,14 @@
 	<body>
 		<script src="js/three.js"></script>
 		<script src="functions.js"></script>
+		<script src="functions_advanced.js"></script>
 		<script src="js/TrackballControls.js"></script>
 
 		<script src="js/MTLLoader.js"></script>
 		<script src="js/DDSLoader.js"></script>
 		<script src="js/OBJMTLLoader.js"></script>
 		<script src="js/OBJLoader.js"></script>
-		
+		<script src="js/ShaderGodRays.js"></script>
 		<script src="js/FresnelShader.js"></script>
 
 
@@ -34,9 +35,22 @@
 
 			var seconds_now, minutes_now;
 
+			var postprocessing = { enabled : true };
+
+			var backgroundColor = 0x2d2b26;
+
+			var bgColor = backgroundColor;
+			var sunColor = 0x6677aa;
+
+			var sunPosition = new THREE.Vector3( -500, 100, 800 );
+			materialDepth = new THREE.MeshDepthMaterial();
+			var screenSpacePosition = new THREE.Vector3();
+
 			//Objects
 			var dial1, dial2;
-			var pencilSize =1.7;
+			var pencilSize = 2;
+			var cageSize = 8;
+
 			var scene = new THREE.Scene();
 			var sceneCube = new THREE.Scene();
 			//scene.fog = new THREE.FogExp2( 0xffffff, 0.009 );
@@ -44,21 +58,41 @@
 			var camera = new THREE.PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 0.1, 200000 );
 			scene.add(camera);
 			
-			//scene.fog = new THREE.Fog( 0x000000, 30, 4005 );
+			scene.fog = new THREE.Fog( backgroundColor-0x222222, 30, 5005 );
 			
-			var renderer = new THREE.WebGLRenderer({ alpha: true, antialiasing: true });
+			var renderer = new THREE.WebGLRenderer({ clearAlpha: 1, alpha: true, antialiasing: true });
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 			renderer.shadowMapEnabled = true;
 			renderer.shadowMapType = THREE.PCFSoftShadowMap;
-			renderer.setClearColor ( 0x000000, 1 );
+			renderer.setClearColor ( backgroundColor, 0 );
+			renderer.autoClear = false;
+			renderer.sortObjects = false;
+
 
 
 			//Skapar en grupp som ska innehålla hela scengrafen
 			sceneGraph = new THREE.Object3D;
 
+			cloud = new THREE.Object3D;
+			scene.add(cloud);
+
+			var pencil = new THREE.Object3D;
+			pencil.scale.x = pencilSize;
+			pencil.scale.y = pencilSize;
+			pencil.scale.z = pencilSize;
+			pencil.position.x = -28;
+			pencil.position.y = 5;
+			pencil.position.z = 0.8;
+			pencil.rotation.x = Math.PI/2;
+			pencil.rotation.y = 1.2;
+			pencil.rotation.z = -0.00;
+			sceneGraph.add(pencil);
+
+
 			sketch = new THREE.Object3D;
 			sceneGraph.add(sketch);
+
 
 			clock = new THREE.Object3D;
 			secondHand = new THREE.Object3D;
@@ -69,17 +103,25 @@
 			clock.add(secondHandGroup);
 			clock.add(minuteHand);
 			clock.add(hourHand);
+
+			clock.position.z = 0.0;
+			clock.position.x = -3;
+			clock.position.y = -1;
+			clock.rotation.x = 0;
+			clock.rotation.y = -0.1;
+			clock.rotation.z = 0.02;
+
 			sceneGraph.add(clock);
 
 
 			//Controls
 			controls = new THREE.TrackballControls( camera );
-			controls.zoomSpeed = 0.5;
+			controls.zoomSpeed = 1.0;
 			controls.panSpeed = 0;
-			controls.rotateSpeed = 6;
+			controls.rotateSpeed = 0;
 
 			/* Camera Settings */
-			camera.position.z = 1100;
+			camera.position.z = 1337;
 			camera.position.x = 0;
 			camera.position.y = 0;
 			camera.lookAt(new THREE.Vector3(0,0,0));
@@ -89,6 +131,7 @@
 
 			addLights();
 			loadClock();
+			loadDust();
 
 
 
@@ -97,8 +140,8 @@
 			
 			scene.add(sceneGraph);
 			
-			clock.rotation.x = Math.PI/2;
-			clock.rotation.y = Math.PI;
+			clock.rotation.x += Math.PI/2;
+			clock.rotation.y += Math.PI;
 
 			clock.scale.x = 2;
 			clock.scale.y = 2;
@@ -112,10 +155,10 @@
 			sceneGraph.scale.x = 20;
 			sceneGraph.scale.y = 20;
 			sceneGraph.scale.z = 20;
-			
 
-			//seconds_now = -Math.PI*2*new Date().getTime() / 60000;
-			//minutes_now = Math.PI*2*time.getMinutes()/60 - seconds_now/60;
+
+			initPostprocessing();
+		
 
 
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -125,7 +168,7 @@
 
 				mouseX = (event.clientX - window.innerWidth/2)/window.innerWidth;
 				mouseY = (event.clientY - window.innerHeight/2)/window.innerHeight;
-				//console.log(mouseX);
+
 
 			}
 
@@ -141,24 +184,33 @@
 
 			var render = function () {
 
+
 				time2 = new Date().getTime() / 1000 - init_time;
 
-				if(time2 < zoom_time){
-					camera.position.z = 5100 - 3900*Math.sin(time2*(Math.PI*2/4)/zoom_time);
-				}
+				// if(time2 < zoom_time){
+				// 	camera.position.z = 5100 - 3900*Math.sin(time2*(Math.PI*2/4)/zoom_time);
+				// }
 				time = new Date();
 
-				
+
+				console.log(camera.position.z);
+				if(camera.position.z > 1900){
+					camera.position.z = 1900;
+				}else if(camera.position.z < 851){
+					camera.position.z = 851;
+				}
+
+
 				mouseControls();
 
-				//controls.update();
+				controls.update();
 				setHands();
 
-				//sceneGraph.rotation.y += Math.sin(time2/2)/5000;
-				//sceneGraph.rotation.x += Math.sin(time2/1)/4000;
+				cloud.rotation.z = time/50000;
 
 				requestAnimationFrame( render );
-				renderer.render(scene, camera);
+
+				godrays();
 				//renderer.render(sceneCube, camera);
 			};
 
@@ -166,6 +218,8 @@
 			function mouseControls(){
 				sceneGraph.rotation.y = mouseX;
 				sceneGraph.rotation.x = mouseY;
+				cloud.rotation.x = mouseY;
+				cloud.rotation.y = mouseX;
 				camera.position.x = 15;
 				camera.position.y = 15;
 			}

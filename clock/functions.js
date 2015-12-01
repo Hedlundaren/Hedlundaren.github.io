@@ -4,6 +4,7 @@ function loadClock(){
 
 
 	/* MATERIALS */
+	var materialScene = new THREE.MeshBasicMaterial( { color: 0x000000, shading: THREE.FlatShading } );
 
 	var path = "textures/SwedishRoyalCastle/";
 	var format = '.jpg';
@@ -37,16 +38,26 @@ function loadClock(){
 		transparent: true
 	});
 
+	var transparentMaterial = new THREE.MeshPhongMaterial( { 
+		color: 0xaa8822, 
+		envMap: reflectionCube, 
+		combine: THREE.MixOperation, 
+		reflectivity: 0.5, 
+		opacity:0.0, 
+		opacityMap : THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
+		bumpMap    :  THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
+		bumpScale  :  0.01,
+		transparent: true
+	});
+
 	var frameMaterial = new THREE.MeshPhongMaterial( { 
 		color: 0x565544, 
 		envMap: reflectionCube, 
 		combine: THREE.MixOperation, 
 		reflectivity: 0.6, 
-		opacity:1, 
 		opacityMap : THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
 		bumpMap    :  THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
-		bumpScale  :  0.1,
-		transparent: true
+		bumpScale  :  0.1
 	});
 
 	var pencilMaterial1 = new THREE.MeshPhongMaterial( { 
@@ -58,6 +69,7 @@ function loadClock(){
 		opacityMap : THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
 		bumpMap    :  THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
 		bumpScale  :  0.00,
+
 	});
 
 	var pencilMaterial2 = new THREE.MeshPhongMaterial( { 
@@ -70,12 +82,16 @@ function loadClock(){
 	});
 
 	var pencilMaterial3 = new THREE.MeshPhongMaterial( { 
-		color: 0x000000, 
+		color: 0x111111, 
 		envMap: reflectionCube, 
 		combine: THREE.MixOperation, 
-		reflectivity: 0, 
+		emissive   :  new THREE.Color("rgb(0,0,0)"),
+		specular   :  new THREE.Color("rgb(1,1,1)"),
+		reflectivity: 0.001, 
 		opacity:1, 
 		opacityMap : THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
+		bumpMap    :  THREE.ImageUtils.loadTexture("obj/scratched_glass.jpg", {}, function(){}),
+		bumpScale  :  0.20,
 	});
 
 
@@ -93,7 +109,11 @@ function loadClock(){
 	} ),
 
 	mesh = new THREE.Mesh( new THREE.BoxGeometry( 10000, 10000, 10000 ), material );
-	sceneGraph.add( mesh );
+	//sceneGraph.add( mesh );
+	mesh.rotation.y = Math.PI/4;
+
+
+
 	mesh.rotation.y = Math.PI/4;
 
 	/* Wall */
@@ -181,19 +201,20 @@ function loadClock(){
 	/* MODELS */
 
 	var oldWall = [];
-	var wallWidth = 150;
-	var nWalls = 4;
-
-	for(var i = 0; i < nWalls; i++){
-		for(var j = 0; j < nWalls; j++){
-			oldWall[i] = new THREE.Mesh( new THREE.PlaneGeometry(wallWidth,wallWidth,1,1), wallMaterial );
-			oldWall[i].castShadow = false;
-			oldWall[i].receiveShadow = true;
-			oldWall[i].position.x = -wallWidth + (i-1)*wallWidth;
-			oldWall[i].position.y = -wallWidth + (j-1)*wallWidth;
-			sceneGraph.add( oldWall[i] );
-		}
-	}
+	var wallWidth = 200;
+	var nWalls = 1;
+	var wall = new THREE.Mesh( new THREE.PlaneGeometry(wallWidth,wallWidth,1,1), wallMaterial );
+	sceneGraph.add(wall);
+	// for(var i = 0; i < nWalls; i++){
+	// 	for(var j = 0; j < nWalls; j++){
+	// 		oldWall[i] = new THREE.Mesh( new THREE.PlaneGeometry(wallWidth,wallWidth,1,1), wallMaterial );
+	// 		oldWall[i].castShadow = false;
+	// 		oldWall[i].receiveShadow = true;
+	// 		oldWall[i].position.x = -wallWidth + (i-1)*wallWidth;
+	// 		oldWall[i].position.y = -wallWidth + (j-1)*wallWidth;
+	// 		sceneGraph.add( oldWall[i] );
+	// 	}
+	// }
 
 	onProgress = function ( xhr ) {
 		if ( xhr.lengthComputable ) {
@@ -242,15 +263,6 @@ function loadClock(){
 		object.receiveShadow = false;
 	}, onProgress, onError);
 
-	loader2.load( "obj/clockFrame.obj", "obj/clockFrame.mtl", function(object){ 
-		
-		clock.add(object);
-		object.traverse( function ( child )
-	    {
-	        if ( child instanceof THREE.Mesh )
-	            child.material = frameMaterial;
-	    });
-	}, onProgress, onError);
 
 	loader2.load( "obj/bolts.obj", "obj/bolts.mtl", function(object){ 
 		
@@ -267,6 +279,17 @@ function loadClock(){
 
 	loader = new THREE.JSONLoader();
 	//************* JSON ***********************
+
+	loader.load("obj/clockFrame.js", 
+
+			function(geometry) {
+
+				dial1 = new THREE.Mesh(geometry, frameMaterial);
+				dial1.castShadow = false;
+				dial1.receiveShadow = true;
+				clock.add(dial1);
+				
+		});
 
 	loader.load("obj/dial12.js", 
 
@@ -324,15 +347,18 @@ function loadClock(){
 				object = new THREE.Mesh(geometry, sketchMaterial);
 				object.castShadow = false;
 				object.receiveShadow = false;
-				object.position.x = -25;
-				object.position.z = 10;
-				object.position.y = -2.3;
-				object.rotation.y = -5*Math.PI/4;
-				object.scale.x = 3;
-				object.scale.y = 3;
-				object.scale.z = 3;
+				object.position.x = 35;
+				object.position.y = 14;
+				object.position.z = -2;
 
-				clock.add(object);
+				object.rotation.x = Math.PI/2;
+				object.rotation.y = -1.3;
+				sketchSize = 4.2;
+				object.scale.x = sketchSize;
+				object.scale.y = sketchSize;
+				object.scale.z = sketchSize;
+
+				sceneGraph.add(object);
 				
 		});
 
@@ -343,13 +369,7 @@ function loadClock(){
 				object = new THREE.Mesh(geometry, sketchMaterial);
 				object.castShadow = false;
 				object.receiveShadow = false;
-				object.position.x = 15;
-				object.rotation.y = -5.1*Math.PI/2;
-				object.scale.x = pencilSize;
-				object.scale.y = pencilSize;
-				object.scale.z = pencilSize;
-
-				clock.add(object);
+				pencil.add(object);
 				
 		});
 
@@ -360,32 +380,35 @@ function loadClock(){
 				object = new THREE.Mesh(geometry, pencilMaterial2);
 				object.castShadow = false;
 				object.receiveShadow = false;
-				object.position.x = 15;
-				object.rotation.y = -5.1*Math.PI/2;
-				object.scale.x = pencilSize;
-				object.scale.y = pencilSize;
-				object.scale.z = pencilSize;
-
-				clock.add(object);
-				
+				pencil.add(object);
 		});
 
 	loader.load("obj/pencil3.js", 
 
 			function(geometry) {
 
-				object = new THREE.Mesh(geometry, sketchMaterial);
+				object = new THREE.Mesh(geometry, pencilMaterial3);
 				object.castShadow = false;
 				object.receiveShadow = false;
-				object.position.x = 15;
-				object.rotation.y = -5.1*Math.PI/2;
-				object.scale.x = pencilSize;
-				object.scale.y = pencilSize;
-				object.scale.z = pencilSize;
-
-				clock.add(object);
+				pencil.add(object);
 				
 		});
+
+		loader.load("obj/cage.js", 
+
+			function(geometry) {
+
+				object = new THREE.Mesh(geometry, transparentMaterial);
+				object.castShadow = false;
+				object.receiveShadow = false;
+				object.scale.x = cageSize;
+				object.scale.y = cageSize;
+				object.scale.z = cageSize;
+
+				sceneGraph.add(object);
+				
+		});
+
 }
 
 
@@ -441,3 +464,65 @@ var spotLight	= new THREE.SpotLight( 0x222221 );
 	//scene.add( ambientLight );
 
 }
+
+function loadDust(){
+	materials = [];
+	flakes = [];
+	cloudGroup =new THREE.Object3D;
+	geometry = new THREE.Geometry();
+	var sunRadius = 5.3;
+	sprite1 = THREE.ImageUtils.loadTexture( "textures/dust1.png", null);
+	sprite2 = THREE.ImageUtils.loadTexture( "textures/dust2.png", null);
+	sprite3 = THREE.ImageUtils.loadTexture( "textures/dust3.png", null);
+	sprite4 = THREE.ImageUtils.loadTexture( "textures/dust2.png", null);
+	sprite5 = THREE.ImageUtils.loadTexture( "textures/dust1.png", null);
+	
+	for ( i = 0; i < 1000; i ++ ) {
+
+		var vertex = new THREE.Vector3();
+
+
+		vertex.x = Math.random()* 4000 - 2000;
+		vertex.y = Math.random() * 4000 - 2000;
+		vertex.z = Math.random() * 4000 + 20;
+
+
+
+		//if(Math.abs(vertex.x) > 1000 || Math.abs(vertex.y) > 1000 || Math.abs(vertex.z) > 1000) {
+			geometry.vertices.push( vertex );
+		//}
+	}
+
+	parameters = [ [ [0.0, 0.0, 0.0], sprite1, 1 ],
+					 [ [0.0, 0.0, 0.0], sprite2, 3 ],
+					 [ [0.0, 0.0, 1.0], sprite3, 5 ],
+					 [ [1.0, 1.0, 0.0], sprite4, 10],
+					 [ [1.0, 0.0, 0.0], sprite5, 20 ]];
+					 		 
+	var particles = [];
+	
+	for ( i = 0; i < parameters.length; ++i ) {	
+		color  = parameters[i][0];
+		sprite = parameters[i][1];
+		size   = parameters[i][2];
+
+	
+
+		materials[i] = new THREE.PointCloudMaterial( { size: 20, map: sprite, blending: THREE.AdditiveBlending, 
+			depthTest: false, transparent : true, opacity : 0.1} );
+
+		materials[i].color.setHSL( color[0], color[1], color[2] );
+
+		particles = new THREE.PointCloud( geometry, materials[i] );
+
+		
+		
+		flakes.push(particles);
+
+	}
+
+	for (var i = 0; i < flakes.length; ++i){cloudGroup.add(flakes[i]);}
+			cloud.add(cloudGroup);
+}
+
+
