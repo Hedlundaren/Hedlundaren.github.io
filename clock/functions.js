@@ -136,7 +136,7 @@ function loadClock(){
 		specular   :  new THREE.Color("rgb(55,55,55)"),
 		shininess  :  5,
 		bumpMap    :  THREE.ImageUtils.loadTexture("textures/brushed_metal.png", {}, function(){}),
-		map        :  THREE.ImageUtils.loadTexture("obj/blackmetal.jpg", {}, function(){}),
+		map        :  THREE.ImageUtils.loadTexture("obj/blackmetal.png", {}, function(){}),
 		bumpScale  :  10.1,
 	});
 

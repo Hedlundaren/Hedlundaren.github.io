@@ -1,0 +1,6 @@
+body { margin: 0; overflow: hidden;
+background: #222;}
+#test{
+	width:100%;
+	background: red;
+}

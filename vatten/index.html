@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Vatten </title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+
+		<!--Bibliotek-->
+		<script src="js/pixi.js"></script>
+		<script src="js/math.min.js"></script>
+		<script src="js/functions.js"></script>
+
+
+	</head>
+
+		<body>
+			<div id="test"></div>
+
+			<script>
+
+				//general
+				var graphics;
+				var renderer;
+				var stage;
+				var canvas;
+
+				//time
+				var d = new Date();
+				var time;
+				var first_time;
+
+				//water
+				var drops = [];
+				var radius = 30;
+				var dropDistance = 0;
+				var dropVec = [0,0];
+
+				var pushRadius = 58;
+				var pullRadius = 60;
+
+				var walldamping = 0.5;	
+				var width = 1000, height = 550;
+				var width = window.innerWidth, height = window.innerHeight;
+				
+				canvas = document.getElementById('test');
+				renderer = PIXI.autoDetectRenderer(width, height, canvas, true, true);
+				stage = new PIXI.Stage(0xaa00ff);
+				document.body.appendChild(renderer.view);
+
+				// create the root of the scene graph
+				stage = new PIXI.Container();
+				graphics = new PIXI.Graphics();
+
+				
+				createDrops();
+				// begin a green fill..
+				
+				 
+				
+
+
+
+
+
+				console.log(vecLength(drops[1].velocity));
+				console.log(drops[1].velocity);
+
+
+
+			document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+			window.addEventListener( 'resize', onWindowResize, false );
+
+
+			function onDocumentMouseDown( event ) {
+
+				mouseX = (event.clientX - window.innerWidth/2);
+				mouseY = (event.clientY - window.innerHeight/2);
+				console.log(mouseX);
+
+			}
+
+			function onWindowResize( e ) {
+				width = window.innerWidth, height = window.innerHeight;
+				renderer.resize( width, height );
+			}
+
+
+
+				animate();
+
+				first_time = Date.now();
+				function animate() {
+
+				    requestAnimationFrame(animate);
+				    time = (Date.now()-first_time)/1000;
+				 	
+				    //console.log(time);
+				 	//Check if wall-bounce
+				   for(var i = 0; i < drops.length; i++){
+
+
+				   	drops[i].position[0] = drops[i].sprite.position.x;
+				   	drops[i].position[1] = drops[i].sprite.position.y;
+
+
+
+
+
+
+				   		// Check wallbounce
+				   		if(drops[i].position[0] < 0 + radius){
+         					drops[i].position[0] = 0 + radius;
+         					drops[i].velocity[0] = -drops[i].velocity[0]*walldamping;
+         				}
+         				else if(drops[i].position[0] > width - radius){
+         					drops[i].position[0] = width - radius;
+         					drops[i].velocity[0] = -drops[i].velocity[0]*walldamping;
+         				}
+
+         				if(drops[i].position[1] < 0 +radius){
+         					drops[i].position[1] = 0 +radius;
+         					drops[i].velocity[1] = -drops[i].velocity[1]*walldamping;
+         				}
+         				else if(drops[i].position[1] > height - radius){
+         					drops[i].position[1] = height - radius;
+         					drops[i].velocity[1] = -drops[i].velocity[1]*walldamping;
+         				}
+
+         				
+
+         				// Calculate closest drops
+         				drops[i].pressure = 1;
+         				drops[i].closeDrops = [];
+
+         				for(var j = 0; j < drops.length; j++){
+         					
+         					dropVec = [(drops[i].position[0]-drops[j].position[0]), (drops[i].position[1]-drops[j].position[1])];
+         					dropDistance = vecLength(dropVec);
+
+         					if(j!=i && dropDistance < pullRadius){
+         						
+         						drops[i].closeDrops.push(drops[i]);
+         						drops[i].pressure += 0.6;
+         						drops[i].velocity = subtractVectors(drops[i].velocity, multiplyVec(dropVec, 0.006*(dropDistance-pushRadius)*drops[j].pressure*1.5 ));
+
+         						if(dropDistance < pushRadius){
+         							//console.log("innerhit!");
+         							
+         							//drops[i].velocity = addVectors(drops[i].velocity, multiplyVec(norm(dropVec),1.2));
+         						}
+         						
+         					}
+         				}
+
+         				// Check if close to wall
+         				if(drops[i].position[1] > (height - 1*radius)){
+         					drops[i].pressure = 300;
+         				}
+
+         				drops[i].sprite.alpha = drops[i].pressure/10;
+
+         				drops[i].velocity = multiplyVec(drops[i].velocity, 0.0 + 1/(drops[i].pressure*0.95));
+         				drops[i].velocity[1] += 3.35;
+
+         				//Set movement
+					   	drops[i].position[0] += drops[i].velocity[0];
+					   	drops[i].position[1] += drops[i].velocity[1];
+
+						drops[i].sprite.position.x = drops[i].position[0];
+					   	drops[i].sprite.position.y = drops[i].position[1];
+					   	renderer.render(stage);
+				   }
+
+				}
+				
+         				
+
+			</script>
+				
+
+		
+	</body>
+</html>

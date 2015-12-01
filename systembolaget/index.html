@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Systembolaget </title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+
+		<!--Bibliotek-->
+		<script src="js/pixi.js"></script>
+		<script src="js/math.min.js"></script>
+		<script src="js/functions.js"></script>
+
+
+	</head>
+
+		<body>
+			<div id="test"></div>
+
+			<script>
+
+				//general
+				var graphics;
+				var renderer;
+				var stage;
+				var canvas;
+
+				//time
+				var d = new Date();
+				var time;
+				var first_time
+
+				//water
+				var drops = [];
+				var COM = [0,0];
+
+				//waterdrop
+				var drip;
+				var radius = 13;
+
+				//collision
+				var walldamping = 0;
+				var collisiongaining = 0;
+				var collisiondamping = 0;
+				var collisiondamping_time = 0;
+				var attractionlevel = 0;
+				var COM_attraction = 0;
+
+				var nearest;
+				var nearest_id = 0;
+
+				//sprite
+				var texture, COM_texture;
+				var sprite;
+				var COM_sprite;
+
+				
+				var canvas = document.getElementById('test');
+				//var width = 1000, height = 550;
+				var width = window.innerWidth, height = window.innerHeight;
+
+				//physics
+				var g = 9.82;
+				var speed = 2.1;
+				var gravity_vector = [0,0];
+				
+				
+
+				
+
+				canvas = document.getElementById('test');
+				renderer = PIXI.autoDetectRenderer(width, height, canvas, true, true);
+				stage = new PIXI.Stage(0xaa00ff);
+
+				document.body.appendChild(renderer.view);
+
+				// create the root of the scene graph
+				stage = new PIXI.Container();
+
+				// create a texture from an image path
+				texture = PIXI.Texture.fromImage('images/blue_sprite.png');
+				COM_texture = PIXI.Texture.fromImage('images/purple_sprite.png');
+
+				graphics = new PIXI.Graphics();
+ 
+				
+				COM_sprite = new PIXI.Sprite(COM_texture);
+				COM_sprite.anchor.x = 0.5;
+				COM_sprite.anchor.y = 0.5;
+				COM_sprite.scale.x = 0.01;
+				COM_sprite.scale.y = 0.01;
+				COM_sprite.alpha = 0.7;
+
+				stage.addChild(COM_sprite);
+
+				createDrops();
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+
+				function onWindowResize( e ) {
+					width = window.innerWidth, height = window.innerHeight;
+					renderer.resize( width, height );
+				}
+
+
+
+
+
+				stage.addChild(sprite);
+
+				animate();
+
+				first_time = Date.now() / 1000;
+
+				walldamping = 1.1;
+				//collisiongaining = 0.1051;
+				collisiondamping = 0.61;
+				collisiondamping_time = 1;
+				//attractionlevel = 1.111;
+				COM_attraction = 0.2;
+
+				function animate() {
+				    requestAnimationFrame(animate);
+				    time = Date.now() / 1000 - first_time;
+				 	//console.log(time);
+
+
+				    for (var i = 0; i < drops.length; ++i){
+				    	drops[i].posX = drops[i].sprite.position.x;
+         				drops[i].posY = drops[i].sprite.position.y;
+				    }
+	
+
+				    // Calculate center of mass		    
+				    COM = [0,0];
+				    for (var i = 0; i < drops.length; ++i) {
+         				COM[0] += drops[i].sprite.position.x/drops.length;
+         				COM[1] += drops[i].sprite.position.y/drops.length;
+
+         				// Calculate nearest
+         				nearest = width;
+         				for (var j = 0; j < drops.length; ++j) {
+
+	         				if(Math.sqrt(Math.pow(drops[i].posX-drops[j].posX,2) + Math.pow(drops[i].posY-drops[j].posY,2)) < nearest && i!=j){
+	         					nearest = Math.sqrt(Math.pow(drops[i].posX-drops[j].posX,2) + Math.pow(drops[i].posY-drops[j].posY,2));
+	         					nearest_id = j;
+	         				}
+     					}
+
+     					// Store distance and nearest
+         				drops[i].nearest_distance = nearest;
+         				drops[i].nearest_direction[0] = drops[nearest_id].posX - drops[i].posX;
+         				drops[i].nearest_direction[1] = drops[nearest_id].posY - drops[i].posY;
+         				drops[i].nearest_direction = norm(drops[i].nearest_direction);
+         				drops[i].nearest = drops[nearest_id];
+
+
+
+         				//Check if drops collide
+         				if(nearest < radius){
+         					if(!drops[i].in_collision){
+         						//Lose speed
+	         					//drops[i].direction[0] = drops[i].direction[0]*collisiondamping;
+	         					//drops[i].direction[1] = drops[i].direction[1]*collisiondamping;
+
+	         					drops[i].direction[0] -= (drops[i].direction[0]-drops[i].nearest.direction[0])*collisiondamping;
+	         					drops[i].direction[1] -= (drops[i].direction[1]-drops[i].nearest.direction[1])*collisiondamping;
+
+	         					//Gain nearest's speed
+	         					drops[i].direction[0] += drops[nearest_id].direction[0]*collisiongaining;
+	         					drops[i].direction[1] += drops[nearest_id].direction[1]*collisiongaining;
+         					}
+         					
+         					//Attract towards nearest
+         					if(drops[i].nearest_distance < 1.41){
+	         					drops[i].direction[0] += attractionlevel*drops[i].nearest_direction[0];
+	         					drops[i].direction[1] += attractionlevel*drops[i].nearest_direction[1];
+         					}
+
+         					drops[i].in_collision = true;
+         				}
+         				drops[i].in_collision = false;
+     				}
+
+	   				COM_sprite.position.x = COM[0];
+	   				COM_sprite.position.y = COM[1];
+
+
+	   				drops[0].sprite.alpha = 0.3;
+	   				//console.log(drops[2].nearest_distance);
+	   				//console.log(drops[i].in_collision);
+
+			    	for (var i = 0; i < drops.length; ++i) {
+         				drops[i].sprite.rotation = time;
+
+
+         				//COM
+         				drops[i].COM_direction[0] = COM[0] - drops[i].sprite.position.x;
+         				drops[i].COM_direction[1] = COM[1] - drops[i].sprite.position.y;
+         				drops[i].COM_direction = norm(drops[i].COM_direction);
+         				drops[i].COM_distance = Math.sqrt(Math.pow(drops[i].COM_direction[0],2), Math.pow(drops[i].COM_direction[1],2));
+         				
+
+         				//MOVE
+         				
+
+         				//Check if wall-bounce
+         				if(drops[i].posX < 0 + radius){
+         					drops[i].posX = 0 + radius;
+         					drops[i].direction[0] = -drops[i].direction[0]*walldamping;
+         				}
+         				else if(drops[i].posX > width - radius){
+         					drops[i].posX = width - radius;
+         					drops[i].direction[0] = -drops[i].direction[0]*walldamping;
+         				}
+         				else if(drops[i].posY < 0 +radius){
+         					drops[i].posY = 0 +radius;
+         					drops[i].direction[1] = -drops[i].direction[1]*walldamping;
+         				}
+         				else if(drops[i].posY > height - radius){
+         					drops[i].posY = height - radius;
+         					drops[i].direction[1] = -drops[i].direction[1]*walldamping;
+         				}
+
+
+
+
+         				drops[i].direction[0] += drops[i].COM_direction[0]*COM_attraction;
+         				drops[i].direction[1] += drops[i].COM_direction[1]*COM_attraction;
+
+
+         				//Gravitys effect
+
+
+         				drops[i].posX += drops[i].speed*drops[i].direction[0];
+         				drops[i].posY += drops[i].speed*drops[i].direction[1];
+
+         				
+
+         				
+         				
+
+
+         				drops[i].sprite.position.x = drops[i].posX;
+         				drops[i].sprite.position.y = drops[i].posY;
+
+     				}
+     				//console.log(drops[0].direction[0]);
+     				if(time > collisiondamping_time)
+     					collisiondamping = 0.0;
+
+				    renderer.render(stage);
+				}
+
+			</script>
+				
+
+		
+	</body>
+</html>
