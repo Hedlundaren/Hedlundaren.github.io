@@ -1,0 +1,27 @@
+		body{
+			background: pink;
+			font-style: helvetica;
+			font-size: 30px;
+			font-family: myFirstFont;
+			font-weight: bold;
+
+			
+
+
+				
+
+		}
+
+		@font-face {
+		   font-family: myFirstFont;
+		   src: url(Lato-Hairline.ttf);
+		}
+
+	div {
+	   font-family: myFirstFont;
+	}
+
+		li{
+			background: rgba(0,0,0,0.0);
+			padding:5px;
+		}
