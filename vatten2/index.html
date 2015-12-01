@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta charset="utf-8">
+  <script src="js/three.min.js"></script>
+  <script src="js/TrackballControls.js"></script>
+</head>
+
+<body>
+</body>
+
+
+<script>
+  	// scene setup
+	var renderer = new THREE.WebGLRenderer({antialias: true});
+	renderer.setSize(document.body.clientWidth, document.body.clientHeight);
+	document.body.appendChild(renderer.domElement);
+	var scene = new THREE.Scene();
+	// CAMERA
+	
+	var fov = 45; // camera field-of-view in degrees
+	var width = renderer.domElement.width;
+	var height = renderer.domElement.height;
+	var aspect = width / height; // view aspect ratio
+	var camera = new THREE.PerspectiveCamera( fov, aspect );
+	camera.position.z = -30;
+	camera.position.y = -200;
+	camera.lookAt(scene.position);
+	scene.fog = new THREE.Fog( 0x000000, 30, 100005 );
+//	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	//controls.zoomSpeed = 0.1;
+	//controls.panSpeed = 0;
+
+
+
+	// LIGHTS
+	ambientLight = new THREE.AmbientLight( 0xffffff );
+	scene.add( ambientLight );
+	// SHADERS
+	var ambient = 0x444444, diffuse = 0x888888, specular = 0x080810, shininess = 2;
+
+	var myTexture = new THREE.ImageUtils.loadTexture("seablue.jpg");
+	var normalTexture = new THREE.ImageUtils.loadTexture("water-displacement.jpg");
+	var shader = THREE.ShaderLib[ "normalmap" ];
+	var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
+	uniforms[ "enableDisplacement" ].value = true;
+	uniforms[ "enableDiffuse" ].value = true;
+	uniforms[ "tDisplacement" ].value = normalTexture;
+	uniforms[ "tDiffuse" ].value = myTexture;
+	uniforms[ "uDisplacementScale" ].value = 2*(Math.sin(Date.now())+5);
+	uniforms[ "uOpacity" ].value = 0.9;
+
+	//uniforms[ 'time' ].value = .000025 * ( Date.now() - start );
+	var parameters = { fragmentShader: shader.fragmentShader, vertexShader: shader.vertexShader, uniforms: uniforms, lights: true, wireframe: false };
+	var material = new THREE.ShaderMaterial( parameters );
+	material.transparent = true;
+	// GEOMETRY
+	
+	geometry = new THREE.PlaneGeometry(300, 300, 300, 300);
+	geometry.computeTangents();
+  
+	var plane = new THREE.Mesh( geometry, material);
+	plane.rotation.y = Math.PI;
+	scene.add(plane);
+	// FUNCTIONS
+	
+	function animate() {
+		//plane.rotation.z = Math.PI*Date.now()/100000;
+		uniforms[ "uDisplacementScale" ].value = 5*(Math.sin(0.001*Date.now())+1.5);
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+	}
+	requestAnimationFrame( animate );
+	
+</script>
+</html>   
