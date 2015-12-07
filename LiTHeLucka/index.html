@@ -66,6 +66,18 @@
 
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 			window.addEventListener( 'resize', onWindowResize, false );
+			document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+
+
+			function onDocumentMouseDown( event ) {
+
+				if(mouseX > -0.1 && mouseX < 0.1 && mouseY > -0.1 && mouseY < 0.1){
+					blotta();
+
+				}else{
+					inteBlotta();
+				}
+			}
 
 			function onDocumentMouseMove( event ) {
 
@@ -89,14 +101,10 @@
 				sceneGraph.rotation.y = time/10000;
 
 				if(mouseX > -0.1 && mouseX < 0.1 && mouseY > -0.1 && mouseY < 0.1){
-					visibility(blottartuba_closed,false);
-					visibility(blottartuba,true);
-					document.getElementById('lucia').style.display = 'block'; 
+					blotta();
 
 				}else{
-					visibility(blottartuba_closed,true);
-					visibility(blottartuba,false);
-					document.getElementById('lucia').style.display = 'none'; 
+					inteBlotta();
 				}
 
 
@@ -112,6 +120,17 @@
 
 
 
+			function blotta(){
+				visibility(blottartuba_closed,false);
+				visibility(blottartuba,true);
+				document.getElementById('lucia').style.display = 'block'; 
+			}
+
+			function inteBlotta(){
+				visibility(blottartuba_closed,true);
+				visibility(blottartuba,false);
+				document.getElementById('lucia').style.display = 'none'; 
+			}
 
 
 			render();
