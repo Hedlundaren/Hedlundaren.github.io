@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>WATER</title>
+        <meta charset="utf-8">
+         <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+        }
+
+        #showWireframe_btn{
+			z-index: 1;
+			position: absolute;
+			font-size: 20px;
+			font-style: bold;
+			color: white;
+		    margin-left: auto;
+		    margin-right: auto;
+			padding: 10px;
+			margin: 10px;
+		    width: 140px;
+			height: 80px;
+			background: rgba(0,0,0,0.9);
+			opacity: 0.6;
+			border: 2px solid white;
+			border-radius: 8px;
+			color: white;
+			outline: none;
+			box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+			top: 0px;
+			left: 0px;
+
+}
+
+    </style>
+    </head>
+
+    <body>
+        <div id="container"></div>
+		<button id="showWireframe_btn" onclick="showWireframe()">Wireframe</button>
+
+    </body>
+
+    <script src="js/three.min.js"></script>
+	<script src="js/OrbitControls.js"></script>
+
+    
+
+    <script type="text/javascript" id="mainCode">
+		    var container, 
+		    renderer, 
+		    scene, 
+		    camera, 
+		    mesh, 
+		    start = Date.now(),
+		    fov = 30
+		    wireframe = false;
+
+		    var cameraPos = new THREE.Vector3(0);
+
+
+		window.addEventListener( 'load', function() {
+
+		    // grab the container from the DOM
+		    container = document.getElementById( "container" );
+
+		     // create the renderer and attach it to the DOM
+		    renderer = new THREE.WebGLRenderer();
+		    renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setClearColor ( 0xB3EAFF, 1 );
+			renderer.setClearColor ( 0x222225, 1 );
+
+		    
+		    container.appendChild( renderer.domElement );
+		    
+		    // create a scene
+		    scene = new THREE.Scene();
+
+		    // create a camera the size of the browser window
+		    // and place it 100 units away, looking towards the center of the scene
+			camera = new THREE.PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 0.1, 10000 );
+		    
+		    camera.position.z = 100;
+
+		    //camera.target = new THREE.Vector3( 0, 0, 0 );
+
+			
+		    
+
+		    scene.add( camera );
+
+		    // create a wireframe material		
+		    material = new THREE.ShaderMaterial( {
+
+			    uniforms: { 
+			        tExplosion: {
+			            type: "t", 
+			            value: THREE.ImageUtils.loadTexture( 'water.png' )
+			        },
+			        time: { // float initialized to 0
+			            type: "f", 
+			            value: 0.0 
+			        },
+			        cameraPos: { // float initialized to 0
+			            type: "v3", 
+			            value: new THREE.Vector3(1,1,1)
+			        },
+			        lightPos: { // float initialized to 0
+			            type: "v3", 
+			            value: new THREE.Vector3(1,100,1000)
+			        }
+
+
+			    },
+			    vertexShader: document.getElementById( 'vertexShader' ).textContent,
+			   fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+			   fog: true
+			    
+			} );
+
+			console.log(material);
+
+		
+
+		    wall = new THREE.Mesh( new THREE.PlaneGeometry(80,80,200,200), material );
+		    wall.translateY(-20);
+		    wall.rotation.x = -Math.PI/2;
+		    scene.add( wall );
+
+		    console.log("Vertices: ", wall.geometry.vertices);
+
+
+
+		    controls = new THREE.OrbitControls( camera, renderer.domElement );
+			//controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
+			controls.enableDamping = true;
+			controls.dampingFactor = 0.25;
+			controls.enableZoom = false;
+			controls.zoomSpeed = 0.11;
+			controls.panSpeed = 0;
+			controls.rotateSpeed = 0.1;		
+	
+
+
+		    
+
+		    render();
+
+		} );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		function onWindowResize() {
+
+			windowHalfX = window.innerWidth / 2;
+			windowHalfY = window.innerHeight / 2;
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+		}
+
+
+
+		function render() {
+
+			scene.updateMatrixWorld();
+			cameraPos.setFromMatrixPosition( camera.matrixWorld );
+
+		    material.uniforms[ 'time' ].value = .00025 * ( Date.now() - start );
+		    material.uniforms[ 'cameraPos' ].value = cameraPos;
+		    renderer.render( scene, camera );
+		    requestAnimationFrame( render );
+		    
+		}
+
+		function showWireframe(){
+			if(!wireframe){
+				material.wireframe = true; 
+				wireframe = true;
+			}
+			else{
+				material.wireframe = false; 
+				wireframe = false;
+			}
+
+		}
+    </script>
+
+    <!--NEW SHADERS-->
+    <script type="x-shader/x-vertex" id="vertexShader">
+		vec3 mod289(vec3 x)
+		{
+		  return x - floor(x * (1.0 / 289.0)) * 289.0;
+		}
+
+		vec4 mod289(vec4 x)
+		{
+		  return x - floor(x * (1.0 / 289.0)) * 289.0;
+		}
+
+		vec4 permute(vec4 x)
+		{
+		  return mod289(((x*34.0)+1.0)*x);
+		}
+
+		vec4 taylorInvSqrt(vec4 r)
+		{
+		  return 1.79284291400159 - 0.85373472095314 * r;
+		}
+
+		vec3 fade(vec3 t) {
+		  return t*t*t*(t*(t*6.0-15.0)+10.0);
+		}
+
+
+		// Classic Perlin noise, periodic variant
+		float pnoise(vec3 P, vec3 rep)
+		{
+		  vec3 Pi0 = mod(floor(P), rep); // Integer part, modulo period
+		  vec3 Pi1 = mod(Pi0 + vec3(1.0), rep); // Integer part + 1, mod period
+		  Pi0 = mod289(Pi0);
+		  Pi1 = mod289(Pi1);
+		  vec3 Pf0 = fract(P); // Fractional part for interpolation
+		  vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
+		  vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+		  vec4 iy = vec4(Pi0.yy, Pi1.yy);
+		  vec4 iz0 = Pi0.zzzz;
+		  vec4 iz1 = Pi1.zzzz;
+
+		  vec4 ixy = permute(permute(ix) + iy);
+		  vec4 ixy0 = permute(ixy + iz0);
+		  vec4 ixy1 = permute(ixy + iz1);
+
+		  vec4 gx0 = ixy0 * (1.0 / 7.0);
+		  vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;
+		  gx0 = fract(gx0);
+		  vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
+		  vec4 sz0 = step(gz0, vec4(0.0));
+		  gx0 -= sz0 * (step(0.0, gx0) - 0.5);
+		  gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+
+		  vec4 gx1 = ixy1 * (1.0 / 7.0);
+		  vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;
+		  gx1 = fract(gx1);
+		  vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
+		  vec4 sz1 = step(gz1, vec4(0.0));
+		  gx1 -= sz1 * (step(0.0, gx1) - 0.5);
+		  gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+
+		  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
+		  vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
+		  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
+		  vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+		  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
+		  vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
+		  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
+		  vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+
+		  vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
+		  g000 *= norm0.x;
+		  g010 *= norm0.y;
+		  g100 *= norm0.z;
+		  g110 *= norm0.w;
+		  vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
+		  g001 *= norm1.x;
+		  g011 *= norm1.y;
+		  g101 *= norm1.z;
+		  g111 *= norm1.w;
+
+		  float n000 = dot(g000, Pf0);
+		  float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
+		  float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
+		  float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+		  float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
+		  float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
+		  float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
+		  float n111 = dot(g111, Pf1);
+
+		  vec3 fade_xyz = fade(Pf0);
+		  vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+		  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+		  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+		  return 2.2 * n_xyz;
+		}
+
+		// Include the Ashima code here!
+		 
+		//varying vec2 vUv;
+		varying float noise;
+		varying vec3 newPos;
+		varying vec3 vecNormal;
+		uniform float time;
+
+		float turbulence( vec3 p ) {
+		    
+		    float t = -.5;
+
+		    for (float f = 1.0 ; f <= 10.0 ; f++ ){
+		        float power = pow( 2.0, f );
+		        t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
+		    }
+		    return t;
+		}
+
+		float getDisplacement(vec3 position, float time){
+
+			noise = 1.0 *  -.1 * turbulence( .2 * normal + time*0.6 );
+
+			float b = 7.0 * pnoise( 0.05 * position + vec3( 2.0 * time*0.6 ), vec3( 100.0 ) );
+		    float c = 1.0 * pnoise( 0.2 * position + vec3( 2.0 * time*0.3 ), vec3( 100.0 ) );
+		    return - noise + b + c ;
+
+		}
+
+		float getBumpmap(vec3 position, float time){
+
+			noise = 2.0 *  -.1 * turbulence( .2 * normal + time*0.6 );
+			
+
+			float b = 7.0 * pnoise( 0.05 * position + vec3( 2.0 * time*0.6 ), vec3( 100.0 ) );
+		    float c = 1.0 * pnoise( 0.2 * position + vec3( 2.0 * time*0.3 ), vec3( 100.0 ) );
+		    float d = 0.7 * pnoise( 1.5 * position + vec3( 2.0 * time*1.9 ), vec3( 100.0 ) );
+		    float e = 0.1 * pnoise( 3.0 * position + vec3( 2.0 * time*3.0 ), vec3( 100.0 ) );
+		    return - noise + b + c + d + e ;
+
+		}
+
+
+
+
+
+
+
+		vec3 calculateNormal(vec3 position, float time){
+
+			float dx = 1.5;
+
+			vec3 A = vec3( 0.0, getBumpmap(vec3(position.x, position.y, position.z), time), 0.0);
+			vec3 B = vec3( dx, getBumpmap(vec3(position.x + dx , position.y, position.z), time), 0.0);
+			vec3 x = B - A;
+
+
+			vec3 C = vec3( 0.0, getBumpmap(vec3(position.x, position.y, position.z + dx), time), dx);
+			vec3 z = B - C;
+
+			vec3 n = cross(x, z);
+
+
+			return n;
+		}
+
+
+
+
+
+		void main() {
+
+
+		    float displacement = getDisplacement(position, time);
+		    vec3 newNormal = calculateNormal( position, time);
+		    vec3 newPosition = position + normal * displacement*0.5;
+		    newPos = newPosition;
+
+		    vecNormal = newNormal;
+		    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+
+		}		
+    </script>
+
+    <script type="x-shader/x-vertex" id="fragmentShader">
+
+		varying vec3 newPos;
+		varying vec3 vecNormal;
+		uniform vec3 cameraPos;
+		uniform vec3 lightPos;
+
+		void main() {
+
+		    float tester = 5.0;
+		    float kd = 0.1;
+		    float ks = 0.1;
+		    float alpha = 2.9;
+
+		    vec3 r = (cameraPos - newPos);
+		    float distance = (pow(r.x, 2.0) + pow(r.y, 2.0) + pow(r.z, 2.0));
+
+		    vec3 V = normalize(cameraPos - newPos);
+		    vec3 L = normalize(lightPos - newPos);
+
+
+
+		    vec3 R = 2.0 * dot(L, vecNormal) * vecNormal - L;
+
+
+		    vec3 ambient = 0.12 * vec3(0.3*(newPos.z+tester),0.6*(newPos.z+tester),0.7*(newPos.z+tester));
+
+		   	vec3 diffuse = 0.0005*vec3(kd*max(dot(lightPos,vecNormal), 0.0));
+
+		   	//vec3 specular = vec3(ks*pow(max(dot(L,V), 0.0),2.0));
+		   	float spec = 0.007 * max( 0.00000001 , (ks * pow( dot(R,V), alpha)));
+		   	vec3 specular = vec3( spec );
+
+
+
+
+
+		    gl_FragColor = vec4(ambient + diffuse + specular, 1.0 );
+		}
+
+    </script>
+
+
+
+</html>
