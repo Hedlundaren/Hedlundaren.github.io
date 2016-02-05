@@ -1,13 +1,23 @@
 	
 a{
 
-	text-decoration: none;
 	color: #4f60ff;
+	text-decoration: none;
+}
+
+a:hover{
+
+	text-decoration: none;
+	color: #5f70ff;
+}
+
+a:visited{
+	color: #154255;
 }
 	body{
 			background: pink;
 			font-style: helvetica;
-			font-size: 30px;
+			font-size: 25px;
 			font-family: myFirstFont;
 			font-weight: bold;
 			text-decoration: none;
@@ -24,6 +34,15 @@ div {
 }
 
 	li{
+		content: "ð"; /* Insert content that looks like bullets */
+    	color: rgba(0,0,0,0.0); /* Or a color you prefer */
 		background: rgba(0,0,0,0.0);
-		padding:5px;
+		padding:6px;
 	}
+
+
+	li:before {
+    content: "•"; /* Insert content that looks like bullets */
+    padding-right: 8px;
+    color: rgba(23,23,23,0.7); /* Or a color you prefer */
+}
